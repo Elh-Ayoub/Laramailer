@@ -16,10 +16,7 @@
         <div class="absolute-center">
             <div class="" style="margin: auto; width: fit-content;">
                 <img src="{{asset('assets/logo.png')}}" alt="" class="flex justify-center" style="margin: auto;">
-                <p style="color: #43EEE4; font-size: xx-large; font-weight: bold;">{{env('APP_NAME')}} API is running...</p>
-                <div style="display: flex; justify-content: center;">
-                    <a href="" style="color: #235F83;">Go to dashboard</a>
-                </div>
+                <p style="color: #43EEE4;">{{env('APP_NAME')}} Password reset successfully!</p>
             </div>
         </div>
     </body>

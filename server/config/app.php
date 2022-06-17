@@ -212,4 +212,8 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
 
+    'default_profile_picture' => [
+        'path' => 'https://ui-avatars.com//api//?name=',
+        'background' => '&color=7F9CF5&background=EBF4FF',
+    ],
 ];

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\VerifyEmailController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,4 +27,5 @@ Route::middleware('auth:sanctum')->group(function(){
 Route::post('auth/forgot-password',[AuthController::class, 'sendResetLink']);
 //Reset password
 Route::patch('auth/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
-
+//Email verification
+Route::post('email/resend-verification', [VerifyEmailController::class, 'resendVerification'])->name('verification.resend');

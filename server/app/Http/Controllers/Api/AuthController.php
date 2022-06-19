@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Notifications\SendVerification;
 // use App\Models\Role;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
@@ -38,8 +38,8 @@ class AuthController extends Controller
         ]);
 
         if($user){
-            // event(new Registered($user));
-            return response(['status' => "success", "message" => "Registration successfully!"], Response::HTTP_OK);
+            $user->notify(new SendVerification($user));
+            return response(['status' => "success", "message" => "Registred successfully! And an email has been sent to your inbox."], Response::HTTP_OK);
         }
         return response(['status' => 'fail', "message" => "Something went wrong! Try again."], Response::HTTP_EXPECTATION_FAILED);
     }

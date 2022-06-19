@@ -81,14 +81,16 @@ class AuthController extends Controller
 
     function sendResetLink(Request $request){
         $request->validate(['email' => 'required|email']);
- 
-        $status = Password::sendResetLink(
-            $request->only('email')
-        );
-     
-        return $status === Password::RESET_LINK_SENT
-                    ? response(['status' => __($status)])
-                    : response(['email' => __($status)], Response::HTTP_BAD_REQUEST);
+        $user = User::where('email', $request->only('email'))->first();
+        if(!$user){
+            return response(['status' => 'fail', 'message' => 'User not found!'], 404);
+        }
+        try{
+            $user->sendPasswordResetNotification(Password::createToken($user));
+        }catch(Exception $e){
+            return response(['status' => 'fail', 'message' => $e->getMessage()], 400);
+        }
+        return response(['status' => 'success', 'message' => 'Reset password link has been sent to your email!']);
     }
 
     function resetPassword(Request $request){

@@ -23,3 +23,9 @@ Route::get('/', function () {
 Route::get('/reset-password/{token}', function (Request $request, $token) {
     return view('Auth.reset-password', ['token' => $token, 'email' => $request->email]);
 })->middleware('guest')->name('password.reset');
+
+//Email verification
+Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, '__invoke'])
+    ->middleware(['signed', 'throttle:6,1'])
+    ->name('verification.verify');
+    

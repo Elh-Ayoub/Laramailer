@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\VerifyEmailController;
 use Illuminate\Http\Request;
@@ -22,11 +23,20 @@ Route::patch('auth/reset-password', [AuthController::class, 'resetPassword'])->n
 //Email verification
 Route::post('email/resend-verification', [VerifyEmailController::class, 'resendVerification'])->name('verification.resend');
 
-/////////////////////// ----User module---- ///////////////////////
-Route::get("/users", [UserController::class, 'index']);
-Route::get("/users/{id}", [UserController::class, 'show']);
-Route::patch("/users/{id}", [UserController::class, 'update'])->middleware('auth:sanctum');
-Route::patch("/users/{id}/password", [UserController::class, 'updatePassword'])->middleware('auth:sanctum');
-Route::post("/users/{id}/avatar", [UserController::class, 'setAvatar'])->middleware('auth:sanctum');
-Route::delete("/users/{id}/avatar", [UserController::class, 'setDefaultAvatar'])->middleware('auth:sanctum');
-Route::delete("/users/{id}", [UserController::class, 'destroy'])->middleware('auth:sanctum');
+Route::middleware('auth:sanctum')->group(function(){
+    /////////////////////// ----User module---- ///////////////////////
+    Route::get("/users", [UserController::class, 'index']);
+    Route::get("/users/{id}", [UserController::class, 'show']);
+    Route::patch("/users/{id}", [UserController::class, 'update']);
+    Route::patch("/users/{id}/password", [UserController::class, 'updatePassword']);
+    Route::post("/users/{id}/avatar", [UserController::class, 'setAvatar']);
+    Route::delete("/users/{id}/avatar", [UserController::class, 'setDefaultAvatar']);
+    Route::delete("/users/{id}", [UserController::class, 'destroy']);
+
+    /////////////////////// ----Role module---- ///////////////////////
+    Route::get("/roles", [RoleController::class, 'index']);
+    Route::get("/roles/{id}", [RoleController::class, 'show']);
+    Route::get("/roles/{id}/users", [RoleController::class, 'getUsersByRoleId']);
+});
+
+

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-// use App\Models\Role;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -15,10 +15,16 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
     public function index(){
+        if(!Auth::user() || !$this->isAdmin()){
+            return response(['status' => 'fail', 'message' => 'This operation is forbidden.'], Response::HTTP_FORBIDDEN);
+        }
         return User::all();
     }
 
     public function show($id){
+        if(($id != Auth::id()) && !$this->isAdmin()){
+            return response(['status' => 'fail', 'message' => 'This operation is forbidden.'], Response::HTTP_FORBIDDEN);
+        }
         $user = User::find($id);
         return ($user) ? ($user) : (response(['status' => "fail", "message" => "User not found!"], 404));
     }
@@ -48,7 +54,11 @@ class UserController extends Controller
         return response(['status' => 'success', 'message' => 'User updated!']);
     }
 
-    public function setAvatar(Request $request, $id){
+    public function setAvatar(Request $request, $id)
+    {
+        if(($id != Auth::id()) && !$this->isAdmin()){
+            return response(['status' => 'fail', 'message' => 'This operation is forbidden.'], Response::HTTP_FORBIDDEN);
+        }
         $user = User::find($id);
         if(!$user) return response(['status' => 'fail', 'message' => 'User not found!'], 404);
 
@@ -97,8 +107,12 @@ class UserController extends Controller
     }
 
     public function setDefaultAvatar($id){
+        if(($id != Auth::id()) && !$this->isAdmin()){
+            return response(['status' => 'fail', 'message' => 'This operation is forbidden.'], Response::HTTP_FORBIDDEN);
+        }
         $user = User::find($id);
         if(!$user) return response(['status' => 'fail', 'message' => 'User not found!'], 400);
+        
         $name = substr($user->username, 0, 2);
         File::delete(public_path(parse_url($user->profile_picture, PHP_URL_PATH)));
         $profile_picture = 'https://ui-avatars.com//api//?name='.$name.'&color=7F9CF5&background=EBF4FF';
@@ -106,12 +120,12 @@ class UserController extends Controller
         return response(['status' => 'success','message'=> 'Profile picture deleted!']);
     }
 
-    // public function isAdmin($user = null){
-    //     if(!$user){
-    //         $user = Auth::user();
-    //     }
-    //     return $user->role_id == Role::where('title', 'Admin')->first()->id;
-    // }
+    public function isAdmin($user = null){
+        if(!$user){
+            $user = Auth::user();
+        }
+        return $user->role_id == Role::where('title', 'ADMIN')->first()->id;
+    }
 
     public function destroy($id)
     {

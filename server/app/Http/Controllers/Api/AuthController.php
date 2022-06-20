@@ -64,6 +64,9 @@ class AuthController extends Controller
         }
 
         $user = Auth::user();
+        if(!$user->email_verified_at){
+            return response(['status' => 'fail', 'message' => "Email not verified yet!"], Response::HTTP_UNAUTHORIZED);
+        }
         $token = $user->createToken('Auth-T')->plainTextToken;
         $cookie = cookie('jwt', $token, 60*24);
         

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\EmailListController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\VerifyEmailController;
@@ -37,6 +38,13 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get("/roles", [RoleController::class, 'index']);
     Route::get("/roles/{id}", [RoleController::class, 'show']);
     Route::get("/roles/{id}/users", [RoleController::class, 'getUsersByRoleId']);
+
+    /////////////////////// ----Email list module---- ///////////////////////
+    Route::get("/email-lists", [EmailListController::class, 'index']);
+    Route::get("/email-lists/{id}", [EmailListController::class, 'show']);
+    Route::post("/email-lists", [EmailListController::class, 'store']);
+    Route::patch("/email-lists/{id}", [EmailListController::class, 'update']);
+    Route::delete("/email-lists/{id}", [EmailListController::class, 'destroy']);
 });
 
 

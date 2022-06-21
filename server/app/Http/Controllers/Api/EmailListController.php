@@ -34,7 +34,7 @@ class EmailListController extends Controller
 
     public function store(Request $request){
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|unique:email_lists',
+            'name' => 'required|string',
         ]);
 
         if($validator->failed()){
@@ -59,7 +59,7 @@ class EmailListController extends Controller
 
     public function update(Request $request, $id){
         $validator = Validator::make($request->all(), [
-            'name' => 'string|unique:email_lists,name,' .$id,
+            'name' => 'string'
         ]);
         if(!Auth::user()){
             return response(['status' => 'fail', 'message' => 'Operation forbidden'], Response::HTTP_UNAUTHORIZED);

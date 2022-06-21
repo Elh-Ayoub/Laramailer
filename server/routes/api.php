@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\EmailController;
 use App\Http\Controllers\Api\EmailListController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\UserController;
@@ -45,6 +46,12 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post("/email-lists", [EmailListController::class, 'store']);
     Route::patch("/email-lists/{id}", [EmailListController::class, 'update']);
     Route::delete("/email-lists/{id}", [EmailListController::class, 'destroy']);
+
+    /////////////////////// ----Emails module---- ///////////////////////
+    Route::get("/email-lists/{id}/emails", [EmailController::class, 'index']);
+    Route::post("/email-lists/{id}/emails", [EmailController::class, 'store']);
+    Route::patch("/emails/{id}", [EmailController::class, 'update']);
+    Route::delete("/emails/{id}", [EmailController::class, 'destroy']);
 });
 
 

@@ -18,7 +18,7 @@
                 <img src="{{asset('assets/logo.png')}}" alt="" class="flex justify-center" style="margin: auto;">
                 <p style="color: #051571c6; font-size: xx-large; font-weight: bold;">{{env('APP_NAME')}} API is running...</p>
                 <div style="display: flex; justify-content: center;">
-                    <a href="" style="color: #0e387a;">Go to dashboard</a>
+                    <a href="{{route('dashboard')}}" style="color: #0e387a;">Go to dashboard</a>
                 </div>
             </div>
         </div>

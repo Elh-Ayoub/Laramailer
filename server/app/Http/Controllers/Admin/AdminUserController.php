@@ -18,8 +18,6 @@ class AdminUserController extends Controller
     public function index(){
         $admin_id = Role::where('title', 'ADMIN')->first()->id;
         $user_id = Role::where('title', 'USER')->first()->id;
-        // $admins = User::where('role_id', $admin_id)->get();
-        // $users = User::where('role_id', $user_id)->get();
         $users = User::where('role_id', $user_id)->orderBy('created_at', 'desc')->simplePaginate(25);
         $admins = User::where('role_id', $admin_id)->orderBy('created_at', 'desc')->get();
 

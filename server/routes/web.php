@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminAuthController;
+use App\Http\Controllers\Admin\AdminRoleController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Api\VerifyEmailController;
 use App\Models\Role;
@@ -51,4 +52,10 @@ Route::group([ 'middleware' => 'auth:sanctum','prefix' => 'admin',], function ()
     Route::delete('users/{id}/avatar', [AdminUserController::class, 'setDefaultAvatar'])->name('users.delete.avatar');
     Route::patch('users/{id}',[AdminUserController::class, 'update'])->name('users.update');
     Route::delete('users/{id}',[AdminUserController::class, 'destroy'])->name('users.delete');
+
+    /////////////////////// ----Role module---- ///////////////////////
+    Route::get('roles', [AdminRoleController::class, 'index'])->name('roles.admin');
+    Route::post('roles', [AdminRoleController::class, 'store'])->name('roles.admin.create');
+    Route::patch('roles/{id}', [AdminRoleController::class, 'update'])->name('roles.admin.update');
+    Route::delete('roles/{id}', [AdminRoleController::class, 'destroy'])->name('roles.admin.delete');
 });

@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('email_senders', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
             $table->bigInteger('list_id');
             $table->bigInteger('author_id');
             $table->longText('view');

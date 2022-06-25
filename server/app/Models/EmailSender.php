@@ -10,6 +10,7 @@ class EmailSender extends Model
     use HasFactory;
 
     protected $fillable = [
+        'name',
         'list_id',
         'author_id',
         'view',

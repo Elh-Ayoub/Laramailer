@@ -20,3 +20,21 @@ $("#choosefile").change(function(){
 $('#SubmitInfoForm').click(function(){
     $('#infoForm').submit();
 })
+
+/*
+    Append choose assets for creating templates
+*/
+$("#view").keyup(checkAssests)
+
+function checkAssests(){
+    var asstes = ($("#view").val().match(/<img/g) || []).length;
+    let html = "";
+    for (let i = 1; i <= asstes; i++){
+        html += 
+        '<div class="row justify-content-around">'+
+            '<label class="label">Choose asset number ' + i +'</label>'+
+            ' <input type="file" class="input_assets" name="assets[]" id="' + i +'">'+
+        '</div>'
+    }
+    $(".assets").html(html);
+}

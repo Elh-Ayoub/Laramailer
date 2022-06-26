@@ -45,16 +45,16 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a href="{{route('templates.admin')}}" class="nav-link @if(Request::url() === route('templates.admin') || Request::url() === route('templates.create')) active @endif">
+                    <i class="fas fa-th-large"></i>
+                  <p>Templates</p>
+                </a>
+              </li>
+            <li class="nav-item">
                 <a href="" class="nav-link">
                     <i class="fas fa-money-bill"></i>
                     <p>Payment settings</p>
                 </a>
-            </li>
-            <li class="nav-item">
-              <a href="" class="nav-link">
-                <i class="fas fa-cash-register"></i>
-                <p>Purchases</p>
-              </a>
             </li>
             <li class="nav-item">
               <a href="" class="nav-link">

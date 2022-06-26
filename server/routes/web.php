@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminRoleController;
+use App\Http\Controllers\Admin\AdminTemplateController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Api\VerifyEmailController;
 use App\Models\Role;
@@ -58,4 +59,12 @@ Route::group([ 'middleware' => 'auth:sanctum','prefix' => 'admin',], function ()
     Route::post('roles', [AdminRoleController::class, 'store'])->name('roles.admin.create');
     Route::patch('roles/{id}', [AdminRoleController::class, 'update'])->name('roles.admin.update');
     Route::delete('roles/{id}', [AdminRoleController::class, 'destroy'])->name('roles.admin.delete');
+
+    /////////////////////// ----Templates module---- ///////////////////////
+    Route::get('templates', [AdminTemplateController::class, 'index'])->name('templates.admin');
+    Route::get('templates/create', [AdminTemplateController::class, 'create'])->name('templates.create');
+    Route::post('templates', [AdminTemplateController::class, 'store'])->name('templates.store');
+    Route::get('templates/{id}', [AdminTemplateController::class, 'edit'])->name('templates.edit');
+    Route::patch('templates/{id}', [AdminTemplateController::class, 'update'])->name('templates.update');
+    Route::delete('templates/{id}', [AdminTemplateController::class, 'destroy'])->name('templates.destroy');
 });

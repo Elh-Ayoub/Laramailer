@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->bigInteger('list_id');
             $table->bigInteger('author_id');
-            $table->longText('view');
+            $table->bigInteger('template_id');
             $table->string('subject');
             $table->enum('frequency', ['daily', 'twice_daily', 'weekly', 'monthly', 'twice_monthly', 'yearly'])->default('daily');
             $table->enum('status', ['running', 'stopped'])->default('running');

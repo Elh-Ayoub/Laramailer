@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\EmailController;
 use App\Http\Controllers\Api\EmailListController;
 use App\Http\Controllers\Api\EmailSenderController;
 use App\Http\Controllers\Api\RoleController;
+use App\Http\Controllers\Api\TemplateController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\VerifyEmailController;
 use Illuminate\Http\Request;
@@ -60,6 +61,14 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post("/email-senders", [EmailSenderController::class, 'store']);
     Route::patch("/email-senders/{id}", [EmailSenderController::class, 'update']);
     Route::delete("/email-senders/{id}", [EmailSenderController::class, 'destroy']);
+
+    /////////////////////// ----Templates module---- ///////////////////////
+    Route::get("/templates/default", [TemplateController::class, 'index']);
+    Route::get("/templates", [TemplateController::class, 'userTemplates']);
+    Route::post("/templates", [TemplateController::class, 'store']);
+    Route::get("/templates/{id}", [TemplateController::class, 'show']);
+    Route::post("/templates/{id}", [TemplateController::class, 'update']);
+    Route::delete("/templates/{id}", [TemplateController::class, 'destroy']);
 });
 
 

@@ -13,7 +13,7 @@ class EmailSender extends Model
         'name',
         'list_id',
         'author_id',
-        'view',
+        'template_id',
         'subject',
         'frequency',
         'status',

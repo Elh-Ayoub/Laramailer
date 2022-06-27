@@ -118,6 +118,7 @@ class AdminTemplateController extends Controller
         if(!$template){
             return back()->with('fail', 'Template not found!');
         }
+        Storage::disk('public')->deleteDirectory($template->path);
         $template->delete();
         return back()->with('success', 'Template deleted successfully!');
     } 

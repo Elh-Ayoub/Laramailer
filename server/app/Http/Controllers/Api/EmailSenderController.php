@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\EmailList;
 use App\Models\EmailSender;
+use App\Models\Template;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -40,7 +41,7 @@ class EmailSenderController extends Controller
     public function store(Request $request){
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
-            'view' => 'required',
+            'template_id' => 'required|integer',
             'reply_email' => 'required|email',
             'subject' => 'required|string',
             'frequency' => 'required|string',
@@ -60,18 +61,16 @@ class EmailSenderController extends Controller
         if(!$this->is_author($list)){
             return response(['status' => 'fail', 'message' => 'Operation forbidden'], Response::HTTP_FORBIDDEN);
         }
-        //create template file
-        $view = $this->storeTemplate($request->name, $request->view);
-        
-        if(!$view){
-            return response(['status' => 'fail', 'message' => 'Something went wrong! Please try again.']);
+        $template = Template::find($request->template_id);
+        if(!$template){
+            return response(['status' => 'fail', 'message' => 'Email template not found!'], Response::HTTP_NOT_FOUND);
         }
-        $view = str_replace(".blade.php", "", $view);
-        $path_parts = pathinfo($view);
-
+        if(!$this->is_author($template)){
+            return response(['status' => 'fail', 'message' => 'Operation forbidden'], Response::HTTP_FORBIDDEN);
+        }
         $sender = EmailSender::create([
-            'name' => $path_parts['filename'],
-            'view' => $view,
+            'name' => $request->name,
+            'template_id' => $template->id,
             'reply_email' => $request->reply_email,
             'subject' => $request->subject,
             'frequency' => $request->frequency,
@@ -81,21 +80,9 @@ class EmailSenderController extends Controller
             'status' => ($request->status) ? ($request->status) : ("running")
         ]);
         if($sender){
-            return response(['status' => 'success', 'message' => 'Email sender has been created successfully!']);
+            return response(['status' => 'success', 'message' => 'Email sender (' . $sender->name . ') has been created successfully!']);
         }
         return response(['status' => 'fail', 'message' => 'Something went wrong! Please try again.']);
-    }
-
-    public function storeTemplate($name, $view){
-        $path = 'templates/' . Auth::id() . "/" . $name . ".blade.php";
-        $i = 1;
-        while(Storage::disk('public')->exists($path)) {
-            $path = 'templates/' . Auth::id() . "/" . $name . "(" . $i . ")" . ".blade.php";
-            $i++;
-        }
-        $storage = Storage::disk('public')->put($path, $view);
-        if($storage) return $path;
-        return false;
     }
 
     public function update(Request $request, $id){
@@ -105,6 +92,7 @@ class EmailSenderController extends Controller
             'subject' => 'string',
             'frequency' => 'string',
             'list_id' => 'integer',
+            'template_id' => 'integer',
             'status' => 'string'
         ]);
 
@@ -129,16 +117,14 @@ class EmailSenderController extends Controller
         if(!$this->is_author($list)){
             return response(['status' => 'fail', 'message' => 'Operation forbidden'], Response::HTTP_FORBIDDEN);
         }
-        //edit template content if view in request not null
-        if($request->view){
-            Storage::disk('public')->put($sender->view . '.blade.php', $request->view);
-        }
+        
         $sender->update([
             'name' => ($request->name) ? ($request->name) : ($sender->name),
             'reply_email' => ($request->reply_email) ? ($request->reply_email) : ($sender->reply_email),
             'subject' => ($request->subject) ? ($request->subject) : ($sender->subject),
             'frequency' => ($request->frequency) ? ($request->frequency) : ($sender->frequency),
             'list_id' => ($request->list_id) ? ($list->id) : ($sender->list_id),
+            'template_id' => ($request->template_id) ? ($request->template_id) : ($sender->template_id),
             'send_at' => ($request->send_at) ? ($request->send_at) : ($sender->send_at),
             'status' => ($request->status) ? ($request->status) : ($sender->status)
         ]);
@@ -156,13 +142,11 @@ class EmailSenderController extends Controller
         if(!$this->is_author($sender)){
             return response(['status' => 'fail', 'message' => 'Operation forbidden'], Response::HTTP_FORBIDDEN);
         }
-        //delete sender template
-        Storage::disk('public')->delete($sender->view . '.blade.php');
         $sender->delete();
         return response(['status' => 'success', 'message' => 'Email sender deleted successfully!']);
     }
 
-    public function is_author($model){
+    private function is_author($model){
         if($model->author_id != Auth::id()){
             return false;
         }

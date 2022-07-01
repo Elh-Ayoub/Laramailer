@@ -6,7 +6,7 @@ import Slider from "../Components/Home/Slider";
 
 function Home(){
     
-    return<div>
+    return<div className="sub_page">
         <Header/>
         <Slider/>
         <Services/>

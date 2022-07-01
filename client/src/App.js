@@ -7,20 +7,22 @@ import "./css/responsive.css"
 import "./css/style.css"
 import Register from "./views/Auth/Register";
 import Login from "./views/Auth/Login";
+import ResetPassword from "./views/Auth/ResetPassword";
+import ResendVerification from "./views/Auth/ResendVerification";
 
 
 function App() {
 
   return (
-    <div className="sub_page">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/auth/register" element={<Register />} />
           <Route path="/auth/login" element={<Login />} />
+          <Route path="/auth/forgot-password" element={<ResetPassword />} />
+          <Route path="/auth/resend-verification" element={<ResendVerification />} />
         </Routes>
       </BrowserRouter>
-    </div>
   );
 }
 

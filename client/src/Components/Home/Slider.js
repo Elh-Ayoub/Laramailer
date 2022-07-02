@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import heroBg from "../../images/hero-bg.png"
 import sliderImg from "../../images/slider-img.png"
 
@@ -26,9 +27,7 @@ function Slider(){
                                             This is the right place to build your email list and send scheduled email with cool templates
                                             </p>
                                             <div className="btn-box">
-                                            <a href="" className="btn1">
-                                                Get started
-                                            </a>
+                                                <Link to="/auth/register" className="btn1">Get started</Link>
                                             </div>
                                         </div>
                                     </div>

@@ -14,6 +14,10 @@ class AuthServices{
     logout(){
         return Http.post("/auth/logout", null, {withCredentials: true})
     }
+
+    user(){
+        return Http.get("/auth/user", {withCredentials: true})
+    }
 }
 
 export default new AuthServices()

@@ -1,30 +1,85 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../../css/login.css"
-import loginSlide from "../../images/login-slide.jpg"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import AuthServices from "../../services/Auth"
 import { toast, ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
-
+import Loader from "../../Components/Loader"
 
 function Register(){
+    const [user, setUser] = useState({loading: true, data: null, error: null})
+    useEffect(() => {
+        AuthServices.user()
+        .then(response => {
+            setUser({loading: false, data: response.data, error: null})
+        })
+        .catch(error => {
+            setUser({loading: false, data: null, error: error.response.data})
+        })
+    }, [])
+    const navigate = useNavigate()
+    if(user.data){
+        navigate("/")
+    }    
+
     const [username, setUsername] = useState(null)
     const [fullName, setFullName] = useState(null)
     const [email, setEmail] = useState(null)
     const [password, setPassword] = useState(null)
     const [passConfirm, setPassConfirm] = useState(null)
     const [res, setRes] = useState({loading: false, data: null, error: null})
-    const notificationAlert = React.useRef();
     let loader = null
     const registration = (e) => {
         e.preventDefault()
-        //
-        toast.error('working!', {position: "top-right", autoClose: 5000, hideProgressBar: true, theme: "colored"});
+        let data = {username: username, full_name: fullName, email: email, password: password, password_confirmation: passConfirm}
+        setRes({loading: true, data: null, error: null})
+        AuthServices.register(data)
+        .then(response => {
+            setRes({loading: false, data: response.data, error: null})
+        })
+        .catch(error => {
+            setRes({loading: false, data: null, error: error.response.data})
+        })
+    }
+
+    const setEverythingToNull = () => {
+        setUsername(null)
+        document.getElementById("username").value = ""
+        setFullName(null)
+        document.getElementById("full_name").value = ""
+        setEmail(null)
+        document.getElementById("email").value = ""
+        setPassword(null)
+        document.getElementById("password").value = ""
+        setPassConfirm(null)
+        document.getElementById("pass_confirm").value = ""
+    }
+
+    if(res.loading){
+        loader = loader = <div className="loader_mid"><Loader/></div>
+    }
+    if(res.data){
+        setEverythingToNull()
+        if(res.data.status === 'success'){
+            toast.success(res.data.message, {position: "top-right", autoClose: 5000, hideProgressBar: true, theme: "colored"});
+        }
+        setRes({loading: false, data: null, error: null})
+    }
+    if(res.error){
+        if(res.error.status === "fail"){
+            toast.error(res.error.message, {position: "top-right", autoClose: 5000, hideProgressBar: true, theme: "colored"});
+        }
+        if(res.error.status === "fail-arr"){
+            for (const [key, value] of Object.entries(res.error.message)) {
+                toast.error(value[0], {position: "top-right", autoClose: 5000, hideProgressBar: true, theme: "colored"});
+            }
+        }
+        setRes({loading: false, data: null, error: null})
     }
 
     return (
         <div className="login-container">
             <ToastContainer/>
+            {loader}
             <div id="main-wrapper" className="container">
                 <div className="row justify-content-center">
                     <div className="col-xl-10">
@@ -39,25 +94,25 @@ function Register(){
                                             <form onSubmit={registration}>
                                                 <div className="form-group">
                                                     <label htmlFor="username">Username</label>
-                                                    <input type="text" className="form-control my-1" id="username" />
+                                                    <input type="text" className="form-control my-1" id="username" onChange={(e) => {setUsername(e.target.value)}} value={username}/>
                                                 </div>
                                                 <div className="form-group">
                                                     <label htmlFor="full_name">Full name</label>
-                                                    <input type="text" className="form-control my-1" id="full_name" />
+                                                    <input type="text" className="form-control my-1" id="full_name" onChange={(e) => {setFullName(e.target.value)}} value={fullName}/>
                                                 </div>
                                                 <div className="form-group">
                                                     <label htmlFor="email">Email address</label>
-                                                    <input type="email" className="form-control my-1" id="email" />
+                                                    <input type="email" className="form-control my-1" id="email" onChange={(e) => {setEmail(e.target.value)}}/>
                                                 </div>
                                                 <div className="form-group">
-                                                    <label htmlFor="exampleInputPassword1">Password</label>
-                                                    <input type="password" className="form-control my-1" id="exampleInputPassword1" />
+                                                    <label htmlFor="password">Password</label>
+                                                    <input type="password" className="form-control my-1" id="password" onChange={(e) => {setPassword(e.target.value)}} />
                                                 </div>
                                                 <div className="form-group mb-4">
                                                     <label htmlFor="pass_confirm">Password confirmation</label>
-                                                    <input type="pass_confirm" className="form-control my-1" id="pass_confirm" />
+                                                    <input type="password" className="form-control my-1" id="pass_confirm" onChange={(e) => {setPassConfirm(e.target.value)}} />
                                                 </div>
-                                                <button type="submit" className="btn btn-outline-primary col-12 mb-4">Sign up</button>
+                                                <button type="submit" className="btn btn-outline-primary col-12 mb-4" disabled={res.loading}>Sign up</button>
                                                 <fieldset className="form-input my-1">
                                                     <Link to="/auth/login">Already have an account ? Sign in</Link>
                                                 </fieldset>

@@ -1,5 +1,5 @@
-import React from "react";
-import {BrowserRouter, Routes, Route} from "react-router-dom"
+import React, { useEffect, useState } from "react";
+import {BrowserRouter, Routes, Route, useLocation} from "react-router-dom"
 import { withRouter } from "react-router";
 import "bootstrap/dist/css/bootstrap.min.css"
 import Home from "./views/Home";
@@ -9,7 +9,8 @@ import Register from "./views/Auth/Register";
 import Login from "./views/Auth/Login";
 import ResetPassword from "./views/Auth/ResetPassword";
 import ResendVerification from "./views/Auth/ResendVerification";
-
+import 'react-toastify/dist/ReactToastify.css';
+import AuthServices from "./services/Auth";
 
 function App() {
 

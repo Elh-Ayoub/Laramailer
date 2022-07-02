@@ -1,13 +1,61 @@
-import React from "react";
+import React, { useState } from "react";
 import "../../css/login.css"
 import loginSlide from "../../images/login-slide.jpg"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import Loader from "../../Components/Loader";
+import { toast, ToastContainer } from "react-toastify";
+import AuthServices from "../../services/Auth";
 
 
 function ResendVerification(){
+    const [res, setRes] = useState({loading: false, data: null, error: null})
+    const [email, setEmail] = useState(null)
+    let loader = null    
+
+    const setEverythingToNull = () => {
+        setEmail(null)
+        document.getElementById("email").value = ""
+    }
+
+    const resend = (e) => {
+        e.preventDefault()
+        setRes({loading: true, data: null, error: null})
+        let data = {email: email}
+        AuthServices.resendVerification(data)
+        .then(response => {
+            setRes({loading: false, data: response.data, error: null})
+        })
+        .catch(error => {
+            setRes({loading: false, data: null, error: error.response.data})
+        })
+    }
+
+    if(res.loading){
+        loader = <div className="loader_mid"><Loader/></div>
+    }
+    if(res.data){
+        setEverythingToNull()
+        if(res.data.status === 'success'){
+            toast.success(res.data.message, {position: "top-right", autoClose: 5000, hideProgressBar: true, theme: "colored"});
+        }
+        setRes({loading: false, data: null, error: null})
+    }
+    if(res.error){
+        if(res.error.status === "fail"){
+            toast.error(res.error.message, {position: "top-right", autoClose: 5000, hideProgressBar: true, theme: "colored"});
+        }
+        if(res.error.status === "fail-arr"){
+            for (const [key, value] of Object.entries(res.error.message)) {
+                toast.error(value[0], {position: "top-right", autoClose: 5000, hideProgressBar: true, theme: "colored"});
+            }
+        }
+        setRes({loading: false, data: null, error: null})
+    }
     
     return (
         <div className="login-container">
+            <ToastContainer/>
+            {loader}
             <div id="main-wrapper" className="container">
                 <div className="row justify-content-center">
                     <div className="col-xl-10">
@@ -19,12 +67,12 @@ function ResendVerification(){
                                             <div className="mb-5">
                                                 <h3 className="h4 font-weight-bold text-theme">Email verification</h3>
                                             </div>
-                                            <form>
+                                            <form onSubmit={resend}>
                                                 <div className="form-group mb-4">
                                                     <label htmlFor="email">Email</label>
-                                                    <input type="email" className="form-control my-1" id="email" />
+                                                    <input type="email" className="form-control my-1" id="email" onChange={(e) => {setEmail(e.target.value)}} />
                                                 </div>
-                                                <button type="submit" className="btn btn-outline-primary col-12 mb-4">Resend verification link</button>
+                                                <button type="submit" className="btn btn-outline-primary col-12 mb-4" disabled={res.loading}>Resend verification link</button>
                                                 <fieldset className="form-input my-1">
                                                     <Link to="/auth/login">Go back to login</Link>
                                                 </fieldset> 

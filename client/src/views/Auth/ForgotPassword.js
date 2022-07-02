@@ -1,23 +1,26 @@
 import React, { useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import "../../css/login.css"
+import loginSlide from "../../images/login-slide.jpg"
+import { Link } from "react-router-dom"
 import { toast, ToastContainer } from "react-toastify";
 import Loader from "../../Components/Loader";
 import AuthServices from "../../services/Auth";
 
-
-function ResetPassword(){
-    const [password, setPasssword] = useState(null)
-    const [passConfirm, setPassConfirm] = useState(null)
+function ForgotPassword(){
     const [res, setRes] = useState({loading: false, data: null, error: null})
-    const { token, email } = useParams()
+    const [email, setEmail] = useState(null)
     let loader = null
-    const navigate = useNavigate()
 
-    const reset = (e) => {
+    const setEverythingToNull = () => {
+        setEmail(null)
+        document.getElementById("email").value = ""
+    }
+
+    const sendResetLink = (e) => {
         e.preventDefault()
         setRes({loading: true, data: null, error: null})
-        let data = {email: email, token: token, password: password, password_confirmation: passConfirm}
-        AuthServices.resetPassword(data)
+        let data = {email: email}
+        AuthServices.sendResetPassLink(data)
         .then(response => {
             setRes({loading: false, data: response.data, error: null})
         })
@@ -30,11 +33,11 @@ function ResetPassword(){
         loader = <div className="loader_mid"><Loader/></div>
     }
     if(res.data){
+        setEverythingToNull()
         if(res.data.status === 'success'){
             toast.success(res.data.message, {position: "top-right", autoClose: 5000, hideProgressBar: true, theme: "colored"});
         }
         setRes({loading: false, data: null, error: null})
-        navigate('/auth/login', { replace: true })
     }
     if(res.error){
         if(res.error.status === "fail"){
@@ -63,16 +66,15 @@ function ResetPassword(){
                                             <div className="mb-5">
                                                 <h3 className="h4 font-weight-bold text-theme">Reset password</h3>
                                             </div>
-                                            <form onSubmit={reset}>
-                                                <div className="form-group">
-                                                    <label htmlFor="email">New password</label>
-                                                    <input type="password" className="form-control my-1" id="email" onChange={(e) => {setPasssword(e.target.value)}} />
-                                                </div>
+                                            <form onSubmit={sendResetLink}>
                                                 <div className="form-group mb-4">
-                                                    <label htmlFor="email">Confirm new password</label>
-                                                    <input type="password" className="form-control my-1" id="email" onChange={(e) => {setPassConfirm(e.target.value)}} />
+                                                    <label htmlFor="email">Email</label>
+                                                    <input type="email" className="form-control my-1" id="email" onChange={(e) => {setEmail(e.target.value)}} />
                                                 </div>
-                                                <button type="submit" className="btn btn-outline-primary col-12 mb-4" disabled={res.loading}>Reset passsword</button>
+                                                <button type="submit" className="btn btn-outline-primary col-12 mb-4" disabled={res.loading}>Send reset link</button>
+                                                <fieldset className="form-input my-1">
+                                                    <Link to="/auth/login">Go back to login</Link>
+                                                </fieldset> 
                                             </form>
                                         </div>
                                     </div>
@@ -95,4 +97,4 @@ function ResetPassword(){
     )
 }
 
-export default ResetPassword
+export default ForgotPassword

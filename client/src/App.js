@@ -12,6 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Success from "./views/Auth/Success";
 import ResetPassword from "./views/Auth/ResetPassword";
 import Dashboard from "./views/Dashboard/Dashboard";
+import Profile from "./views/Dashboard/Profile";
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
           <Route path="/auth/reset-password/:token/:email" element={<ResetPassword />} />
           {/* User Module */}
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </BrowserRouter>
   );

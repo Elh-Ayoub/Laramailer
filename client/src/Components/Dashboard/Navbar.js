@@ -1,13 +1,41 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import AuthServices from "../../services/Auth";
+import Loader from "../Loader";
+import { toast, ToastContainer } from "react-toastify";
 
 
 function Navbar(props){
     const [showNav, setShowNav] = useState(false);
+    const [res, setRes] = useState({loading: false, data: null, error: null})
+    const logout = () => {
+      setRes({loading: true, data: null, error: null})
+      AuthServices.logout()
+      .then(response => {
+          setRes({loading: false, data: response.data, error: null})
+      })
+      .catch(error => {
+          setRes({loading: false, data: null, error: error.response.data})
+      })
+    }
+  
+    let loader = null
+    if(res.loading){
+      loader = loader = <div className="loader_mid"><Loader/></div>
+    }
+    if(res.data){
+      if(res.data.status === 'success'){
+          toast.success(res.data.message, {position: "top-right", autoClose: 5000, hideProgressBar: true, theme: "colored"});
+      }
+      setRes({loading: false, data: null, error: null})
+      window.location.reload()
+    }
 
     return (
         <div className="d-flex justify-content-between align-items-center p-3">
             <div className="navbar-header">
+                <ToastContainer/>
+                {loader}
                 <button className="navbar-toggler btn-md" type="button" onClick={() => {props.setShowSide(!props.showSide)}}>
                     <i className="fa fa-bars"></i>
                 </button>
@@ -26,7 +54,7 @@ function Navbar(props){
                             <a className="nav-link dashboard-nav-link" href="#">Documentation</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link dashboard-nav-link" href="#">logout</a>
+                            <button className="nav-link dashboard-nav-link logout-dash-btn" onClick={logout}>logout</button>
                         </li>
                     </ul>
                 </div>

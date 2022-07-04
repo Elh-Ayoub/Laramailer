@@ -23,7 +23,7 @@ function Sidebar(props){
                     <a href="#"><i class="fas fa-th-large"></i> Templates</a>
                 </li>
                 <li className={(props.active === "My account") ? ("active") : ("")}>
-                    <a href="#"><i class="fas fa-address-card"></i> My account</a>
+                    <Link to="/profile"><i class="fas fa-address-card"></i> My account</Link>
                 </li>
             </ul>
         </div>

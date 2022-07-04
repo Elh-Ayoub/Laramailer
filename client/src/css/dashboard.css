@@ -188,6 +188,9 @@ p {
     font-size: 14px;
     float: left;
 }
+.logout-dash-btn{
+    border: none;
+}
 /* .dashboard-footer{
     position: absolute;
     bottom: 0;

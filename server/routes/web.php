@@ -26,8 +26,9 @@ Route::middleware('auth.check')->group(function(){
     Route::post("admin/auth/forgot-password", [AdminAuthController::class, "sendResetLink"])->name('forget_password.send');
 });
 //reset password form
-Route::get('/reset-password/{token}', function (Request $request, $token) {
-    return view('Auth.reset-password', ['token' => $token, 'email' => $request->email]);
+Route::get('/auth/reset-password/{token}/{email}', function (Request $request, $token, $email) {
+    // return view('Auth.reset-password', ['token' => $token, 'email' => $email]);
+    return redirect(env('FRONT_URL') . '/auth/reset-password/' . $token . "/" . $email);
 })->middleware('guest')->name('password.reset');
 
 //Email verification

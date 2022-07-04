@@ -79,7 +79,7 @@ class AuthController extends Controller
 
     public function logout(){
         $cookie = Cookie::forget('jwt');
-        return response(['status' => 'success'], 200)->withCookie($cookie);
+        return response(['status' => 'success', 'message' => 'logged out successfully!'], 200)->withCookie($cookie);
     }
 
     function sendResetLink(Request $request){
@@ -114,7 +114,7 @@ class AuthController extends Controller
             }
         );
         return $status === Password::PASSWORD_RESET
-                    ? (view('Auth.reset-success'))
-                    : (['fail' => __($status)]);
+                    ? (['status' => 'success', 'message' => 'Password updated successfully!'])
+                    : (['status' => 'fail', 'message' => __($status)]);
     }
 }

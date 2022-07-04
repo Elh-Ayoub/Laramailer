@@ -44,7 +44,7 @@ class PasswordReset extends Notification
     public function toMail($notifiable)
     {
         $data = [
-            'url' => route('password.reset', ['token' => $this->token, 'email' => $this->user->email]),
+            'url' => env('FRONT_URL') . '/auth/reset-password/' . $this->token . "/" . $this->user->email,
             'user' => $this->user,
             'subject' => "Reset password",
             'title' => 'Hello ' . $this->user->username . "!",

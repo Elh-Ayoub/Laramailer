@@ -14,16 +14,22 @@ function Sidebar(props){
                     <Link to="/dashboard"><i className="fa fa-dashboard"></i> Dashboard</Link>
                 </li>
                 <li className={(props.active === "My Mailers") ? ("active") : ("")}>
-                    <a href="#"><i class="fa fa-envelope"></i> My Mailers</a>
+                    <a href="#"><i className="fa fa-envelope"></i> My Mailers</a>
                 </li>
                 <li className={(props.active === "Email lists") ? ("active") : ("")}>
-                    <a href="#"><i class="fas fa-clipboard-list"></i> Email lists</a>
+                    <Link to="/email-lists"><i className="fas fa-clipboard-list"></i> Email lists</Link>
                 </li>
                 <li className={(props.active === "Templates") ? ("active") : ("")}>
-                    <a href="#"><i class="fas fa-th-large"></i> Templates</a>
+                    <a href="#"><i className="fas fa-th-large"></i> Templates</a>
                 </li>
                 <li className={(props.active === "My account") ? ("active") : ("")}>
-                    <Link to="/profile"><i class="fas fa-address-card"></i> My account</Link>
+                    <Link to="/profile"><i className="fas fa-address-card"></i> My account</Link>
+                </li>
+                <li className="sidebar-bottom">
+                    <p>
+                        &copy; <span id="displayYear">{new Date().getFullYear()}</span> All Rights Reserved By
+                        <a className="text-info" href="https://www.linkedin.com/in/ayoub-el-haddadi-590b99219/"> Ayoub El-Haddadi</a>   
+                    </p>
                 </li>
             </ul>
         </div>

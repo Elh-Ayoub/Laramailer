@@ -42,7 +42,7 @@ function Navbar(props){
             </div>
             <nav className="navbar navbar-expand-lg navbar-dashboar justify-content-end">            
                 <button className="navbar-toggler btn-md" type="button" data-toggle="collapse" data-target="#dashboard_navbar" onClick={() => {setShowNav(!showNav)}} aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <i class="fas fa-ellipsis-v"></i>
+                    <i className="fas fa-ellipsis-v"></i>
                 </button>
         
                 <div className={(showNav) ? ("collapse navbar-collapse navbar-dashboard nav-border-bottom show") : ("collapse navbar-collapse navbar-dashboard nav-border-bottom")}  id="dashboard_navbar">

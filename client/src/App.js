@@ -13,6 +13,7 @@ import Success from "./views/Auth/Success";
 import ResetPassword from "./views/Auth/ResetPassword";
 import Dashboard from "./views/Dashboard/Dashboard";
 import Profile from "./views/Dashboard/Profile";
+import EmailLists from "./views/Dashboard/EmailLists";
 
 
 function App() {
@@ -31,6 +32,8 @@ function App() {
           {/* User Module */}
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/profile" element={<Profile />} />
+          {/* Email lists */}
+          <Route path="/email-lists" element={<EmailLists />} />
         </Routes>
       </BrowserRouter>
   );

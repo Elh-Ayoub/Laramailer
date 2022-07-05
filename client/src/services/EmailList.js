@@ -20,6 +20,10 @@ class EmailListServices{
     destroy(id){
         return http.delete(`/email-lists/${id}`, {withCredentials: true})
     }
+
+    emails(id){
+        return http.get(`/email-lists/${id}/emails`, {withCredentials: true})
+    }
 }
 
 export default new EmailListServices()

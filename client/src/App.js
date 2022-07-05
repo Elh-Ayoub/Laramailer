@@ -14,6 +14,7 @@ import ResetPassword from "./views/Auth/ResetPassword";
 import Dashboard from "./views/Dashboard/Dashboard";
 import Profile from "./views/Dashboard/Profile";
 import EmailLists from "./views/Dashboard/EmailLists";
+import EmailListsById from "./views/Dashboard/EmailListById";
 
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           {/* Email lists */}
           <Route path="/email-lists" element={<EmailLists />} />
+          <Route path="/email-lists/:id" element={<EmailListsById />} />
         </Routes>
       </BrowserRouter>
   );

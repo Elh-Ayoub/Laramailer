@@ -51,7 +51,7 @@ function MyEmailLists(){
                     <td>{(list.description) ? (list.description) : ("No description")}</td>
                     <td>{new Date(list.created_at).toUTCString()}</td>
                     <td>
-                        <button className="btn btn-outline-warning btn-sm mx-2"><i className="fas fa-pen"></i></button>
+                        <Link to={`/email-lists/${list.id}`} className="btn btn-outline-warning btn-sm mx-2"><i className="fas fa-pen"></i></Link>
                         <button className="btn btn-outline-danger btn-sm" onClick={() => {DeleteClickHandler(list.id)}}><i className="fas fa-trash"></i></button>
                     </td>
                 </tr>

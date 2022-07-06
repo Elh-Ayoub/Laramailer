@@ -1,16 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 import Loader from "../../Loader";
 import { toast, ToastContainer } from "react-toastify";
-import EmailListServices from "../../../services/EmailList";
+import TemplateServices from "../../../services/Template";
+import { useNavigate } from "react-router-dom";
 
-function DeleteList(props){
+
+function DeleteTemplate(props){
     const [res, setRes] = useState({loading: false, data: null, error: null})
+    const navigate = useNavigate()
 
     const destroy = (e) => {
         e.preventDefault()
         setRes({loading: true, data: null, error: null})
-        EmailListServices.destroy(props.id)
+        TemplateServices.destroy(props.id)
         .then(response => {
             setRes({loading: false, data: response.data, error: null})
         })
@@ -29,7 +32,7 @@ function DeleteList(props){
             toast.success(res.data.message, {position: "top-right", autoClose: 5000, hideProgressBar: true, theme: "colored"});
         }
         setRes({loading: false, data: null, error: null})
-        window.location.reload()
+        navigate('/templates')
     }
 
     if(res.error){
@@ -52,7 +55,7 @@ function DeleteList(props){
             <Modal.Body className="bg-danger text-light">
                 <ToastContainer/>
                 {loader}
-                Woohoo, you're about to delete an email list!<br/>All emails in this list will be deleted<br/>Are you sure ?
+                Woohoo, you're about to delete this template<br/>Are you sure ?
             </Modal.Body>
             <Modal.Footer className="bg-danger">
                 <button className="btn btn-outline-light" onClick={props.onHide}>
@@ -66,4 +69,4 @@ function DeleteList(props){
     )
 }
 
-export default DeleteList
+export default DeleteTemplate

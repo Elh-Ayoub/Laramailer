@@ -60,7 +60,6 @@ function EmailListInfo(props){
                 <p>{(list.data.message.description) ? (list.data.message.description) : ("No description")}</p>
                 <UpdateList show={showEdit} onHide={() => {setShowEdit(false)}} list={list.data.message}/>
                 <AppendEmail show={showAppend} onHide={() => {setShowAppend(false)}} list={list.data.message}/>
-                {/* delete email */}
                 <EmailListContent list={list.data.message}/>
             </>
         }

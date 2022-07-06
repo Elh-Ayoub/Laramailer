@@ -3,10 +3,13 @@ import EmailListServices from "../../../services/EmailList";
 import Loader from "../../Loader";
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import DeleteEmail from "./DeleteEmail";
 
 
 function EmailListContent(props){
     const [emails, setEmail] = useState({loading: true, data: null, error: null})
+    const [showDelete, setShowDelete] = useState(false)
+    const [selectedId, setSelectedId] = useState(null)
 
     const navigate = useNavigate()
 
@@ -19,6 +22,11 @@ function EmailListContent(props){
             setEmail({loading: false, data: null, error: error.response.data})
         })
     }, [])
+
+    const HandleShowDelete = (id) => {
+        setSelectedId(id)
+        setShowDelete(true)
+    }
 
     let loader = null
     if(emails.loading){
@@ -41,12 +49,12 @@ function EmailListContent(props){
     if(emails.data){
         if(emails.data.status === 'success'){
             content = emails.data.message.map(email =>
-                <tr>
+                <tr key={email.id}>
                     <td>{i++}</td>
                     <td>{email.email}</td>
                     <td>{(email.tag) ? (email.tag) : ("No tag specified")}</td>
                     <td className="text-center">
-                        <button className="btn btn-danger btn-sm"><i className="fas fa-trash"></i></button>
+                        <button className="btn btn-danger btn-sm" onClick={() => {HandleShowDelete(email.id)}}><i className="fas fa-trash"></i></button>
                     </td>
                 </tr>
             )
@@ -72,6 +80,7 @@ function EmailListContent(props){
                     </tbody>
                 </table>
             </div>
+            <DeleteEmail show={showDelete} onHide={() => {setShowDelete(false)}} id={selectedId}/>
         </div>
     )
 }

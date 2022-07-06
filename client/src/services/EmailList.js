@@ -24,6 +24,14 @@ class EmailListServices{
     emails(id){
         return http.get(`/email-lists/${id}/emails`, {withCredentials: true})
     }
+
+    appendEmails(id, data){
+        return http.post(`/email-lists/${id}/emails`, data, {withCredentials: true})
+    }
+
+    deleteEmail(id){
+        return http.delete(`/emails/${id}`, {withCredentials: true})
+    }
 }
 
 export default new EmailListServices()

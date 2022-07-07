@@ -49,7 +49,7 @@ class UserController extends Controller
             'username' => ($request->username) ? ($request->username) : ($user->username),
             'profile_picture' => ($request->file('profile_picture')) ? ($this->uploadImage($request, $user)) : ($user->profile_picture),
             'full_name' => ($request->full_name) ? ($request->full_name) : ($user->full_name),
-            'role_id' => ($request->role_id) ? ($request->role_id) : ($user->role_id),
+            'role_id' => ($request->role_id && $this->isAdmin()) ? ($request->role_id) : ($user->role_id),
         ]);
         return response(['status' => 'success', 'message' => 'User updated!']);
     }

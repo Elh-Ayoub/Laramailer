@@ -35,6 +35,8 @@ class EmailSenderController extends Controller
         if(!$this->is_author($sender)){
             return response(['status' => 'fail', 'message' => 'Operation forbidden'], Response::HTTP_FORBIDDEN);
         }
+        $sender->list_name = EmailList::find($sender->list_id)->name;
+        $sender->template_name = Template::find($sender->template_id)->name;
         return response(['status' => 'success', 'message' => $sender]);
     }
 
@@ -129,6 +131,12 @@ class EmailSenderController extends Controller
             'status' => ($request->status) ? ($request->status) : ($sender->status)
         ]);
         return response(['status' => 'success', 'message' => 'Email sender updated successfully!']);
+    }
+
+    public function getInfo(){
+        $template = Template::where('author_id', Auth::id())->get(['id', 'name']);
+        $list = EmailList::where('author_id', Auth::id())->get(['id', 'name']);
+        return response(['status' => 'success', 'message' => ['templates' => $template, 'lists' => $list]]);
     }
 
     public function destroy($id){

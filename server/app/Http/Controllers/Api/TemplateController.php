@@ -14,7 +14,11 @@ class TemplateController extends Controller
 {
 
     public function index(){
-        return response(['status' => 'success', 'message' => Template::where('type', 'default')->get()]);
+        $templates = Template::where('type', 'default')->get();
+        foreach($templates as $template){
+            $template->view = file_get_contents(public_path('storage/' . $template->path . $template->html));
+        }
+        return response(['status' => 'success', 'message' => $templates]);
     }
 
     public function userTemplates(){
@@ -38,14 +42,15 @@ class TemplateController extends Controller
         if(!$this->is_author($template)){
             return response(['status' => 'fail', 'message' => 'Operation forbidden'], Response::HTTP_FORBIDDEN);
         }
-        return response(['status' => 'success', 'message' => $template]);
+        $html = file_get_contents(public_path('storage/' . $template->path . $template->html));
+        return response(['status' => 'success', 'message' => $template, 'html' => $html]);
     }
 
     public function store(Request $request){
         $validator = Validator::make($request->all(), [
             'default_id' => "required|integer",
         ]);
-        if($validator->failed()){
+        if($validator->fails()){
             return response(['status' => 'fail-arr', 'message' => $validator->errors()->toArray()], 400);
         }
 
@@ -91,7 +96,7 @@ class TemplateController extends Controller
             'thumbnail' => $default->thumbnail,
         ]);
         if($template){
-            return response(['status' => 'success', 'message' => 'Template created successfully!']);
+            return response(['status' => 'success', 'message' => 'Template created successfully!', 'id' => $template->id]);
         }
     }
 

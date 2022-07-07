@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Email;
 use App\Models\EmailList;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -37,7 +38,7 @@ class EmailListController extends Controller
             'name' => 'required|string',
         ]);
 
-        if($validator->failed()){
+        if($validator->fails()){
             return response(['status' => 'fail-arr', 'message' => $validator->errors()->toArray()], 400);
         }
         if(!Auth::user()){
@@ -93,6 +94,8 @@ class EmailListController extends Controller
         if(!$this->is_author($list)){
             return response(['status' => 'fail', 'message' => 'Operation forbidden'], Response::HTTP_FORBIDDEN);
         }
+        //delete list emails
+        Email::where('list_id', $list->id)->delete();
         $list->delete();
         return response(['status' => 'success', 'message' => 'An email list has been deleted!']); 
     }

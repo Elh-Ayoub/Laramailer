@@ -14,7 +14,7 @@ function Sidebar(props){
                     <Link to="/dashboard"><i className="fa fa-dashboard"></i> Dashboard</Link>
                 </li>
                 <li className={(props.active === "My Mailers") ? ("active") : ("")}>
-                    <a href="#"><i className="fa fa-envelope"></i> My Mailers</a>
+                    <Link to="/mailers"><i className="fa fa-envelope"></i> My Mailers</Link>
                 </li>
                 <li className={(props.active === "Email lists") ? ("active") : ("")}>
                     <Link to="/email-lists"><i className="fas fa-clipboard-list"></i> Email lists</Link>

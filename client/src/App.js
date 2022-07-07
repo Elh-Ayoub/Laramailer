@@ -17,6 +17,8 @@ import EmailLists from "./views/Dashboard/EmailLists";
 import EmailListsById from "./views/Dashboard/EmailListById";
 import Templates from "./views/Dashboard/Templates";
 import TemplateById from "./views/Dashboard/TemplateById";
+import Mailers from "./views/Dashboard/Mailers";
+import MailerDetails from "./views/Dashboard/MailerDetails";
 
 
 function App() {
@@ -41,6 +43,9 @@ function App() {
           {/* Templates */}
           <Route path="/templates" element={<Templates />} />
           <Route path="/templates/:id" element={<TemplateById />} />
+          {/* Mailers */}
+          <Route path="/mailers" element={<Mailers />} />
+          <Route path="/mailers/:id" element={<MailerDetails />} />
         </Routes>
       </BrowserRouter>
   );

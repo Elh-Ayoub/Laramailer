@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import EmailListInfo from "../../Components/Dashboard/EmailLists/EmailListInfo";
+import MailerInfo from "../../Components/Dashboard/Mailers/MailerInfo";
+import MyMailers from "../../Components/Dashboard/Mailers/MyMailers";
 import Navbar from "../../Components/Dashboard/Navbar";
 import Sidebar from "../../Components/Dashboard/Sidebar";
-import "../../css/profile.css"
+import "../../css/dashboard.css"
 import AuthServices from "../../services/Auth";
 
 
-function EmailListsById() {
+function MailerDetails(){
     const [showSide, setShowSide] = useState(true)
-    const [showEdit, setShowEdit] = useState(false)
     const [user, setUser] = useState({loading: true, data: null, error: null})
+    const { id } = useParams()
     useEffect(() => {
         AuthServices.user()
         .then(response => {
@@ -24,18 +25,20 @@ function EmailListsById() {
     if(!user.data){
         navigate("/")
     }
-    ////
-    const { id } = useParams()
-
     let content
     if(user.data){
-        content = 
+        content =
         <div id="wrapper" className={(showSide) ? ("wrapper-content") : ("wrapper-content toggled")}>
-            <Sidebar active="Email lists"/>
+            <Sidebar active="My Mailers"/>
             <Navbar showSide={showSide} setShowSide={setShowSide}/>
-            <div id="page-content-wrapper" className="profile-wrapper">                
+            <div id="page-content-wrapper">
                 <div className="container-fluid">
-                    <EmailListInfo id={id}/>
+                    <div className="row">
+                        <div className="col-lg-12">
+                            {/* mailer info */}
+                            <MailerInfo id={id}/>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -43,4 +46,4 @@ function EmailListsById() {
     return content
 }
 
-export default EmailListsById
+export default MailerDetails

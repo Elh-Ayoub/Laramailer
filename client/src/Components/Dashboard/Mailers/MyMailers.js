@@ -34,46 +34,51 @@ function MyMailers(){
             }
         }
     }
+    let table = null
     let content = null
     if(res.data){
         if(res.data.status === 'success'){
-            content = res.data.message.map((mailer, index) => 
-                <tr key={index}>
-                    <td>{index + 1}</td>
-                    <td>{mailer.name}</td>
-                    <td className="text-capitalize">{mailer.frequency.replace("_", " ")}</td>
-                    <td>{(mailer.status === "running") ? (
-                        <span className="text-success text-capitalize">{mailer.status}</span>
-                    ): (
-                        <span className="text-danger text-capitalize">{mailer.status}</span> 
-                    )}
-                    </td>
-                    <td>{new Date(mailer.created_at).toUTCString()}</td>
-                    
-                    <td><Link to={`/mailers/${mailer.id}`} className="btn btn-outline-primary">Details</Link></td>
-                </tr>
-            )
+            if(res.data.message.length === 0){
+                table = <p className="my-2 text-muted">Empty...</p>
+            }else{
+                content = res.data.message.map((mailer, index) => 
+                    <tr key={index}>
+                        <td>{index + 1}</td>
+                        <td>{mailer.name}</td>
+                        <td className="text-capitalize">{mailer.frequency.replace("_", " ")}</td>
+                        <td>{(mailer.status === "running") ? (
+                            <span className="text-success text-capitalize">{mailer.status}</span>
+                        ): (
+                            <span className="text-danger text-capitalize">{mailer.status}</span> 
+                        )}
+                        </td>
+                        <td>{new Date(mailer.created_at).toUTCString()}</td>
+                        
+                        <td><Link to={`/mailers/${mailer.id}`} className="btn btn-outline-primary">Details</Link></td>
+                    </tr>
+                )
+                table = 
+                <table className="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Frequency</th>
+                            <th>Status</th>
+                            <th>Created</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ToastContainer/>
+                        {loader}
+                        {content}
+                    </tbody>
+                </table>
+            }            
         }
     }
     
-    return (
-        <table className="table">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Frequency</th>
-                    <th>Status</th>
-                    <th>Created</th>
-                </tr>
-            </thead>
-            <tbody>
-                <ToastContainer/>
-                {loader}
-                {content}
-            </tbody>
-        </table>
-    )
+    return table
 }
 
 export default MyMailers

@@ -126,7 +126,9 @@ function CreateMailer(props){
                             </div>
                             <div className="col-sm-9 text-secondary">
                                 <select className="form-select" onChange={(e) => {setListId(e.target.value)}}>
-                                    <option selected disabled>Select one</option>
+                                    <option selected disabled>
+                                        {(info.data.message.lists.length === 0) ? ("No email list created yet!") : ("Select one")}
+                                    </option>
                                     {
                                         info.data.message.lists.map((list, i) => 
                                             <option key={i} value={list.id}>{list.name}</option>
@@ -141,7 +143,9 @@ function CreateMailer(props){
                             </div>
                             <div className="col-sm-9 text-secondary">
                                 <select className="form-select" onChange={(e) => {setTemplateId(e.target.value)}}>
-                                    <option selected disabled>Select one</option>
+                                    <option selected disabled>
+                                        {(info.data.message.templates.length === 0) ? ("No template created yet!") : ("Select one")}
+                                    </option>
                                     {
                                         info.data.message.templates.map((template, i) => 
                                             <option key={i} value={template.id}>{template.name}</option>

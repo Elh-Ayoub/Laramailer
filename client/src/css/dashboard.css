@@ -191,6 +191,7 @@ p {
 }
 .logout-dash-btn{
     border: none;
+    background: none;
 }
 .sidebar-bottom{
     position: absolute;

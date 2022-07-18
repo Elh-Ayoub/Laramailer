@@ -10,6 +10,7 @@ import AuthServices from "../../services/Auth";
 function Dashboard(){
     const [showSide, setShowSide] = useState(true)
     const [user, setUser] = useState({loading: true, data: null, error: null})
+    const navigate = useNavigate()
     useEffect(() => {
         AuthServices.user()
         .then(response => {
@@ -17,12 +18,10 @@ function Dashboard(){
         })
         .catch(error => {
             setUser({loading: false, data: null, error: error.response.data})
+            navigate("/")
         })
     }, [])
-    const navigate = useNavigate()
-    if(!user.data){
-        navigate("/")
-    }
+    
     let content
     if(user.data){
         content = 

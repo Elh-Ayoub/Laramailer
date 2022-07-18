@@ -35,31 +35,36 @@ function MyTemplates(){
             }
         }
     }
+    let cart = null
     let content = null
     if(res.data){
         if(res.data.status === 'success'){
-            content = res.data.message.map(template => 
-                <div className="default-template" key={template.id}>
-                    <Link to={`/templates/${template.id}`}>
-                        <img src={template.thumbnail} className="template-thumbnail"/>
-                        <p className="text-center mt-1">{template.name}</p>
-                    </Link>
+            if(res.data.message.length === 0){
+                cart = <p className="my-2 text-muted">Empty...</p>
+            }else{
+                content = res.data.message.map(template => 
+                    <div className="default-template" key={template.id}>
+                        <Link to={`/templates/${template.id}`}>
+                            <img src={template.thumbnail} className="template-thumbnail"/>
+                            <p className="text-center mt-1">{template.name}</p>
+                        </Link>
+                    </div>
+                )
+                cart = 
+                <div className="card">
+                    <ToastContainer/>
+                    {loader}
+                    <div className="card-body">
+                        <div className="default-templates-container">
+                            {content}
+                        </div>
+                    </div>
                 </div>
-            )
+            }            
         }
     }
 
-    return (
-        <div className="card">
-            <ToastContainer/>
-            {loader}
-            <div className="card-body">
-                <div className="default-templates-container">
-                    {content}
-                </div>
-            </div>
-        </div>
-    )
+    return cart
 }
 
 export default MyTemplates

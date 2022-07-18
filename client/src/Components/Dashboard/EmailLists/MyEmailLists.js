@@ -42,44 +42,49 @@ function MyEmailLists(){
         setShowEdit(true)
     }
 
+    let table = null
     let content = null
     if(res.data){
         if(res.data.status === 'success'){
-            content = res.data.message.map(list => 
-                <tr key={list.id} itemScope="row">
-                    <td><Link to={`/email-lists/${list.id}`}>{list.name}</Link></td>
-                    <td>{(list.description) ? (list.description) : ("No description")}</td>
-                    <td>{new Date(list.created_at).toUTCString()}</td>
-                    <td>
-                        <Link to={`/email-lists/${list.id}`} className="btn btn-outline-warning btn-sm mx-2"><i className="fas fa-pen"></i></Link>
-                        <button className="btn btn-outline-danger btn-sm" onClick={() => {DeleteClickHandler(list.id)}}><i className="fas fa-trash"></i></button>
-                    </td>
-                </tr>
-            )
+            if(res.data.message.length === 0){
+                table = <p className="my-2 text-muted">Empty...</p>
+            }else{
+                content = res.data.message.map(list => 
+                    <tr key={list.id} itemScope="row">
+                        <td><Link to={`/email-lists/${list.id}`}>{list.name}</Link></td>
+                        <td>{(list.description) ? (list.description) : ("No description")}</td>
+                        <td>{new Date(list.created_at).toUTCString()}</td>
+                        <td>
+                            <Link to={`/email-lists/${list.id}`} className="btn btn-outline-warning btn-sm mx-2"><i className="fas fa-pen"></i></Link>
+                            <button className="btn btn-outline-danger btn-sm" onClick={() => {DeleteClickHandler(list.id)}}><i className="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                )
+                table = 
+                <div className="table-responsive-lg table-responsive-md table-responsive-sm">
+                    <ToastContainer/>
+                    {loader}
+                    <table className="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Created at</th>
+                                <th>Edit / Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {content}
+                            {(content && selectedId) ? (
+                                <DeleteList show={showEdit} onHide={() => {setShowEdit(false)}} id={selectedId}/>
+                            ) : (null)}
+                        </tbody>
+                    </table>
+                </div>
+            }            
         }
     }
-    return(
-        <div className="table-responsive-lg table-responsive-md table-responsive-sm">
-            <ToastContainer/>
-            {loader}
-            <table className="table table-hover">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Created at</th>
-                        <th>Edit / Delete</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {content}
-                    {(content && selectedId) ? (
-                        <DeleteList show={showEdit} onHide={() => {setShowEdit(false)}} id={selectedId}/>
-                    ) : (null)}
-                </tbody>
-            </table>
-        </div>
-    )
+    return table
 }
 
 export default MyEmailLists

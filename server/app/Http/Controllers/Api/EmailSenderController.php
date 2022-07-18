@@ -35,8 +35,8 @@ class EmailSenderController extends Controller
         if(!$this->is_author($sender)){
             return response(['status' => 'fail', 'message' => 'Operation forbidden'], Response::HTTP_FORBIDDEN);
         }
-        $sender->list_name = EmailList::find($sender->list_id)->name;
-        $sender->template_name = Template::find($sender->template_id)->name;
+        $sender->list_name = (EmailList::find($sender->list_id)) ? (EmailList::find($sender->list_id)->name) : ("Email list has been deleted!");
+        $sender->template_name = (Template::find($sender->template_id)) ? (Template::find($sender->template_id)->name) : ("Template has been deleted");
         return response(['status' => 'success', 'message' => $sender]);
     }
 
@@ -119,7 +119,14 @@ class EmailSenderController extends Controller
         if(!$this->is_author($list)){
             return response(['status' => 'fail', 'message' => 'Operation forbidden'], Response::HTTP_FORBIDDEN);
         }
+        $template = Template::find(($request->template_id) ? ($request->template_id) : ($sender->template_id));
+        if(!$template){
+            return response(['status' => 'fail', 'message' => 'Template not found!'], Response::HTTP_NOT_FOUND);
+        }
         
+        if(!$this->is_author($template)){
+            return response(['status' => 'fail', 'message' => 'Operation forbidden'], Response::HTTP_FORBIDDEN);
+        }
         $sender->update([
             'name' => ($request->name) ? ($request->name) : ($sender->name),
             'reply_email' => ($request->reply_email) ? ($request->reply_email) : ($sender->reply_email),

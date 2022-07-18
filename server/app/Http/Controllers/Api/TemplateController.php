@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\EmailSender;
 use App\Models\Template;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -148,7 +149,11 @@ class TemplateController extends Controller
         if(!$this->is_author($template)){
             return response(['status' => 'fail', 'message' => 'Operation forbidden'], Response::HTTP_FORBIDDEN);
         }
-
+        //pause mailers with this template
+        $mailers = EmailSender::where('template_id', $template->id)->get();
+        foreach($mailers as $mailer){
+            $mailer->update(['status' => 'stopped']);
+        }
         Storage::disk('public')->deleteDirectory($template->path);
         $template->delete();
         return response(['status' => 'success', 'message' => 'Template deleted successfully!']);

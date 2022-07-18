@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Email;
 use App\Models\EmailList;
+use App\Models\EmailSender;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -94,13 +95,18 @@ class EmailListController extends Controller
         if(!$this->is_author($list)){
             return response(['status' => 'fail', 'message' => 'Operation forbidden'], Response::HTTP_FORBIDDEN);
         }
+        //pause mailers with this list
+        $mailers = EmailSender::where('list_id', $list->id)->get();
+        foreach($mailers as $mailer){
+            $mailer->update(['status' => 'stopped']);
+        }
         //delete list emails
         Email::where('list_id', $list->id)->delete();
         $list->delete();
         return response(['status' => 'success', 'message' => 'An email list has been deleted!']); 
     }
 
-    public function is_author($list){
+    private function is_author($list){
         if($list->author_id != Auth::id()){
             return false;
         }

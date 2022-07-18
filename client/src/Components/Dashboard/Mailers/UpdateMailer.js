@@ -124,11 +124,17 @@ function UpdateMailer(props){
                                 <h6 className="mb-0">Select email list</h6>
                             </div>
                             <div className="col-sm-9 text-secondary">
-                                <select className="form-select" value={listId} onChange={(e) => {setListId(e.target.value)}}>
-                                    {/* <option selected disabled>Select one</option> */}
+                                <select className="form-select" onChange={(e) => {setListId(e.target.value)}}>
+                                    {(info.data.message.lists.length === 0) ? (
+                                        <option disabled selected>No email list created yet!</option>
+                                    ) : (
+                                        <option selected value={props.mailer.list_id}>{props.mailer.list_name}</option>
+                                    )}
                                     {
-                                        info.data.message.lists.map((list, i) => 
-                                            <option key={i} value={list.id}>{list.name}</option>
+                                        info.data.message.lists.map((list, i) =>
+                                            (props.mailer.list_name !== list.name) ?
+                                                <option key={i} value={list.id}>{list.name}</option>
+                                            : (null)
                                         )
                                     }
                                 </select>
@@ -139,11 +145,17 @@ function UpdateMailer(props){
                                 <h6 className="mb-0">Select Template</h6>
                             </div>
                             <div className="col-sm-9 text-secondary">
-                                <select className="form-select" value={templateId} onChange={(e) => {setTemplateId(e.target.value)}}>
-                                    {/* <option selected disabled>Select one</option> */}
+                                <select className="form-select" onChange={(e) => {setTemplateId(e.target.value)}}>
+                                    {(info.data.message.templates.length === 0) ? (
+                                        <option disabled selected>No template created yet!</option>
+                                    ) : (
+                                        <option value={props.mailer.template_id} selected>{props.mailer.template_name}</option>
+                                    )}
                                     {
                                         info.data.message.templates.map((template, i) => 
-                                            <option key={i} value={template.id}>{template.name}</option>
+                                            (props.mailer.template_name !== template.name) ?
+                                                <option key={i} value={template.id}>{template.name}</option>
+                                            : (null)
                                         )
                                     }
                                 </select>

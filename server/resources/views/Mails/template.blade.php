@@ -67,7 +67,7 @@ h1, .center{
             <div class="center-content">
                 <img src="{{$message->embed(public_path('assets/logo.png'))}}" class="content-img"  alt="LOGO">
             </div>
-            <h1 style="text-align: center;">{{$data['title']}}!</h1>
+            <h1 style="text-align: center;">{{$data['title']}}</h1>
             <div class="center-content">
                 <img class="content-img" src="{{$message->embed(public_path('assets/img1.png'))}}" alt="IMAGE">
             </div>

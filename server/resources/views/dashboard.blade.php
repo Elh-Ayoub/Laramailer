@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css')}}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('plugins/uplot/uPlot.min.css') }}">
   <style> .login-form{background: #235F83;color: white;}.border-radius-10{border-radius: 10px;}</style>
   <style>.nav-item > .active{background-color: #235F83 !important;}</style>
 </head>
@@ -35,9 +36,9 @@
                 </div>
             </div>
             <section class="content">
-                <div class="card card-solid">
+                <div class="card card-primary card-outline">
                     <div class="card-body pb-0">
-                        <div class="row justify-content-start">
+                        <div class="row justify-content-between">
                             <div class="col-lg-3 col-6">
                                 <div class="small-box bg-danger">
                                     <div class="inner">
@@ -62,9 +63,22 @@
                                     <a href="{{route('users.admin')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                                 </div>
                             </div>
+                            <div class="col-lg-3 col-6">
+                                <div class="small-box bg-warning">
+                                    <div class="inner">
+                                        <h3>{{$today_reg}}</h3>
+                                        <p>Today's registrations</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="fas fa-user-plus"></i>
+                                    </div>
+                                    <a href="{{route('users.admin')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+                @include('Users.info')
             </section>
         </div>
         @include('layouts.footer')
@@ -73,7 +87,13 @@
 <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
 <!-- Bootstrap 4 -->
 <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<!-- uPlot -->
+<script src="{{ asset('plugins/uplot/uPlot.iife.min.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('dist/js/adminlte.min.js')}}"></script>
+<script src="{{ asset('plugins/flot/jquery.flot.js') }}"></script>
+<script src="{{ asset('plugins/flot/plugins/jquery.flot.pie.js') }}"></script>
+<script src={{asset("js/dashboardPlots.js")}}></script>
+@include('layouts.toastrs')
 </body>
 </html>

@@ -38,13 +38,7 @@ Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, '__invoke
 
 Route::group([ 'middleware' => 'auth:sanctum','prefix' => 'admin',], function () {
     //dashboard
-    Route::get("dashboard", function(){
-        $admin_id = Role::where('title', 'ADMIN')->first()->id;
-        $user_id = Role::where('title', 'USER')->first()->id;
-        $admins = User::where('role_id', $admin_id)->get();
-        $users = User::where('role_id', $user_id)->get();
-        return view('dashboard', ['admins' => count($admins), 'users' => count($users)]);
-    })->name('dashboard');
+    Route::get("dashboard", [AdminAuthController::class, 'dashboard'])->name('dashboard');
     /////////////////////// ----User module---- ///////////////////////
     Route::get('users', [AdminUserController::class, 'index'])->name('users.admin');
     Route::post('users', [AdminUserController::class, 'store'])->name('users.admin.store');
@@ -54,7 +48,8 @@ Route::group([ 'middleware' => 'auth:sanctum','prefix' => 'admin',], function ()
     Route::delete('users/{id}/avatar', [AdminUserController::class, 'setDefaultAvatar'])->name('users.delete.avatar');
     Route::patch('users/{id}',[AdminUserController::class, 'update'])->name('users.update');
     Route::delete('users/{id}',[AdminUserController::class, 'destroy'])->name('users.delete');
-
+    //notify users
+    Route::post('users/notify', [AdminUserController::class, 'notify'])->name('users.admin.notify');
     /////////////////////// ----Role module---- ///////////////////////
     Route::get('roles', [AdminRoleController::class, 'index'])->name('roles.admin');
     Route::post('roles', [AdminRoleController::class, 'store'])->name('roles.admin.create');

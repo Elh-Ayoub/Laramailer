@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Role;
+use App\Notifications\NotifyUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
@@ -124,5 +125,31 @@ class AdminUserController extends Controller
         }else{
             return back()->with('fail-arr', $res->message);
         }
+    }
+
+    public function notify(Request $request){
+        $validator = Validator::make($request->all(), [
+            'subject' => "required|string",
+        ]);
+        if($validator->fails()){
+            return back()->with('fail-arr', $validator->errors()->toArray());
+        }
+        $data = [
+            'subject' => $request->subject,
+            'title' => $request->title,
+            'text_1' => $request->text1,
+            'text_2' => $request->text2,
+            'btn_text' => $request->btn_text,
+            'url' => $request->url,
+            'text_3' => $request->text3,
+        ];
+        foreach(User::all() as $user){
+            $data['user'] = $user;
+            if(!$data['title']){
+                $data['title'] = "Welcome " . $user->username . "!";
+            }
+            $user->notify(new NotifyUsers($data));
+        }
+        return back()->with('success', 'Notifaction has been sent');
     }
 }

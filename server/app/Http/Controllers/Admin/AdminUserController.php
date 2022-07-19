@@ -152,4 +152,35 @@ class AdminUserController extends Controller
         }
         return back()->with('success', 'Notifaction has been sent');
     }
+
+    public function notifySingle(Request $request, $id){
+        $validator = Validator::make($request->all(), [
+            'subject' => "required|string",
+        ]);
+        if($validator->fails()){
+            return back()->with('fail-arr', $validator->errors()->toArray());
+        }
+        $user = User::find($id);
+        if(!$user){
+            return back()->with('fail', 'User not found!');
+        }
+
+        $data = [
+            'subject' => $request->subject,
+            'title' => $request->title,
+            'text_1' => $request->text1,
+            'text_2' => $request->text2,
+            'btn_text' => $request->btn_text,
+            'url' => $request->url,
+            'text_3' => $request->text3,
+            'user' => $user,
+        ];
+        
+        if(!$data['title']){
+            $data['title'] = "Welcome " . $user->username . "!";
+        }
+        $user->notify(new NotifyUsers($data));
+        
+        return back()->with('success', 'Notifaction has been sent to ' . $user->username);
+    }
 }

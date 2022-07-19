@@ -21,7 +21,7 @@
 .content{
     background-color: whitesmoke;
     padding: 10px 20px;
-    width: fit-content;
+    width: 70%;
     margin: 0 auto;
     border-radius: 10px;
 }
@@ -77,6 +77,11 @@ h1, .center{
             </div>
             <p style="text-align: center;">{{$data['text_3']}}</p>
             <p>Regards,<br>Laramailer</p>
+            <hr>
+            <p style="font-size: small">
+                If you have troubles with pressing the button copy the following link and paste it in your browser<br>
+                <a href="{{$data['url']}}">{{$data['url']}}</a>
+            </p>
         </div>
     </div>
 </body>

@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Contracts\Encryption\DecryptException;
+use Illuminate\Support\Facades\Crypt;
 
 class EmailController extends Controller
 {
@@ -22,7 +24,14 @@ class EmailController extends Controller
             return response(['status' => 'fail', 'message' => 'Operation forbidden'], Response::HTTP_FORBIDDEN);
         }
         $emails = Email::where(['list_id' => $list_id, 'author_id' => $list->author_id])->get();
-
+        
+        try {
+            foreach($emails as $email){
+                $email->email = Crypt::decryptString($email->email);
+            }            
+        } catch (DecryptException $e) {
+            return response(['status' => 'fail', 'message' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
+        }
         return response(['status' => 'success', 'message' => $emails]);
     }
 
@@ -43,7 +52,7 @@ class EmailController extends Controller
         }
         foreach($request->email as $e){
             $email = Email::create([
-                'email' => $e,
+                'email' => Crypt::encryptString($e),
                 'list_id' => $list->id,
                 'author_id' => Auth::id(),
                 'tag' => $request->tag

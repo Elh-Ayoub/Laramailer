@@ -5,11 +5,8 @@ use App\Http\Controllers\Admin\AdminRoleController;
 use App\Http\Controllers\Admin\AdminTemplateController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Api\VerifyEmailController;
-use App\Models\Role;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
 
 
 Route::get('/', function () {
@@ -50,6 +47,8 @@ Route::group([ 'middleware' => 'auth:sanctum','prefix' => 'admin',], function ()
     Route::delete('users/{id}',[AdminUserController::class, 'destroy'])->name('users.delete');
     //notify users
     Route::post('users/notify', [AdminUserController::class, 'notify'])->name('users.admin.notify');
+    Route::post('users/{id}/notify', [AdminUserController::class, 'notifySingle'])->name('users.admin.notify.single');
+    
     /////////////////////// ----Role module---- ///////////////////////
     Route::get('roles', [AdminRoleController::class, 'index'])->name('roles.admin');
     Route::post('roles', [AdminRoleController::class, 'store'])->name('roles.admin.create');

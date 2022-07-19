@@ -55,35 +55,37 @@
                 <h3 class="profile-username text-center">{{$user->username}}</h3>
                 <p class="text-muted text-center">{{$user->full_name}}</p>
                 <ul class="list-group list-group-unbordered mb-3">
-                    <li class="list-group-item">
-                        <b>Role</b> <a class="float-right">{{App\Models\Role::find($user->role_id)->title}}</a>
-                    </li>
-                    <li class="list-group-item">
-                        <b>Balence</b> <a class="float-right"></a>
-                    </li>
-                    <form action="{{route('users.update.avatar', $user->id)}}" method="POST" class="form-group row mt-2" enctype="multipart/form-data">
-                      @csrf
-                      @method('PATCH')
-                      <div class="d-flex w-100 justify-content-between mt-2 ml-1 mr-2">
-                          <label class="">Profile picture</label>
-                          <label class="selectfile btn btn-outline-secondary btn-sm" for="choosefile">Select picture</label>
-                          <input id="choosefile" type="file" name="profile_picture" class="d-none">
-                      </div>
-                      <button class="btn btn-warning">save</button>
-                    </form>
-                    <form action="{{route('users.delete.avatar', $user->id)}}" class="form-group row" method="POST">
+                  <li class="list-group-item">
+                      <b>Role</b> <a class="float-right">{{App\Models\Role::find($user->role_id)->title}}</a>
+                  </li>
+                  <li class="list-group-item">
+                    <b>Balence</b> <a class="float-right"></a>
+                  </li>
+                  <form action="{{route('users.update.avatar', $user->id)}}" method="POST" class="form-group row mt-2" enctype="multipart/form-data">
+                    @csrf
+                    @method('PATCH')
+                    <div class="d-flex col-12 justify-content-between align-items-center">
+                      <label class="btn btn-outline-secondary btn-sm m-0" for="choosefile">Select picture</label>
+                      <input id="choosefile" type="file" name="profile_picture" hidden>
+                      <button class="btn btn-warning m-0">save</button>
+                    </div>                      
+                  </form>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <form action="{{route('users.delete.avatar', $user->id)}}" class="" method="POST">
                       @csrf
                       @method('DELETE')
-                      <div class="d-flex w-100 justify-content-start">
-                          <button type="submit" class="btn btn-danger">Delete avatar</button>
+                      <div class="d-flex justify-content-start">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete avatar</button>
                       </div> 
-                    </form> 
+                    </form>
+                    <button type="submit" class="btn btn-info btn-sm" data-toggle="modal" data-target="#notify-specific-user-{{$user->id}}">Notify user</button>
+                  </li>
                 </ul>
               </div>
             </div>
           </div>
           <div class="col-md-9">
-            <div class="card">
+            <div class="card card-primary card-outline">
               <div class="card-header p-2">
                 <ul class="nav nav-pills">
                     <li class="nav-item"><a class="nav-link active" href="#settings" data-toggle="tab">Info</a></li>
@@ -192,6 +194,44 @@
                 </div>
             </form>
         </div>
+    </div>
+    <div id="notify-specific-user-{{$user->id}}" class="modal fade">
+      <div class="modal-dialog">
+          <form class="modal-content" method="POST" action="{{route('users.admin.notify.single', $user->id)}}">
+              @csrf
+              <div class="modal-header bg-primary">
+                  <h5 class="modal-title">Send notification to {{$user->username}}</h5>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+              </div>
+              <div class="modal-body ">
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" placeholder="Subject" name="subject" required>
+                </div>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" placeholder="Title" name="title">
+                </div>
+                <div class="input-group mb-3">
+                    <textarea class="form-control" placeholder="Text (1)" name="text1"></textarea>
+                </div>
+                <div class="input-group mb-3">
+                  <textarea class="form-control" placeholder="Text (2)" name="text2"></textarea>
+                </div>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" placeholder="Url" name="url">
+                </div>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" placeholder="Button text" name="btn_text">
+                </div>
+                <div class="input-group mb-3">
+                  <textarea class="form-control" placeholder="Text (3)" name="text3"></textarea>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal"><i class="fas fa-times mx-1"></i>Cancel</button>
+                <button type="submit" class="btn btn-outline-primary"><i class="fas fa-paper-plane mx-1"></i>Send</button>
+              </div>
+          </form>
+      </div>
     </div>
   </div>
   @include('layouts.footer')

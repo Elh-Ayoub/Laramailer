@@ -19,8 +19,8 @@ class UserServices{
         return Http.patch(`/users/${id}/password`, data, {withCredentials: true})
     }
 
-    destroy(id){
-        return Http.delete(`/users/${id}`, {withCredentials: true})
+    destroy(id, data){
+        return Http.delete(`/users/${id}`, {withCredentials: true, data: data})
     }
 }
 

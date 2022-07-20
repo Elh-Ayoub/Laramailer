@@ -127,13 +127,22 @@ class UserController extends Controller
         return $user->role_id == Role::where('title', 'ADMIN')->first()->id;
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
+        $validator = Validator::make($request->all(), [
+            'password' => 'required|string',
+        ]);
+        if($validator->fails()){
+            return response(['status' => 'fail-arr', 'message' => $validator->errors()->toArray()], 400);
+        }
         $user = User::find($id);
         if(($id != Auth::id()) && !$this->isAdmin()){
             return response(['status' => 'fail', 'message' => 'This operation is forbidden.'], Response::HTTP_FORBIDDEN);
         }
-        $user->delete();
-        return response(['status' => 'success', 'message' => 'User deleted successfully!']);
+        if(Hash::check($request->password, Auth::user()->password)){
+            $user->delete();
+            return response(['status' => 'success', 'message' => 'User deleted successfully!']);
+        }
+        return response(['status' => 'fail', 'message' => 'Password incorrect!'], Response::HTTP_FORBIDDEN);
     }
 }

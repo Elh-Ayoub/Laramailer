@@ -9,6 +9,7 @@ use App\Models\EmailSender;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class EmailListController extends Controller
@@ -84,7 +85,13 @@ class EmailListController extends Controller
         return response(['status' => 'success', 'message' => 'An email list has been updated!']);        
     }
 
-    public function destroy($id){
+    public function destroy(Request $request, $id){
+        $validator = Validator::make($request->all(), [
+            'password' => 'required|string',
+        ]);
+        if($validator->fails()){
+            return response(['status' => 'fail-arr', 'message' => $validator->errors()->toArray()], 400);
+        }
         if(!Auth::user()){
             return response(['status' => 'fail', 'message' => 'Operation forbidden'], Response::HTTP_UNAUTHORIZED);
         }
@@ -95,15 +102,18 @@ class EmailListController extends Controller
         if(!$this->is_author($list)){
             return response(['status' => 'fail', 'message' => 'Operation forbidden'], Response::HTTP_FORBIDDEN);
         }
-        //pause mailers with this list
-        $mailers = EmailSender::where('list_id', $list->id)->get();
-        foreach($mailers as $mailer){
-            $mailer->update(['status' => 'stopped']);
+        if(Hash::check($request->password, Auth::user()->password)){
+            //pause mailers with this list
+            $mailers = EmailSender::where('list_id', $list->id)->get();
+            foreach($mailers as $mailer){
+                $mailer->update(['status' => 'stopped']);
+            }
+            //delete list emails
+            Email::where('list_id', $list->id)->delete();
+            $list->delete();
+            return response(['status' => 'success', 'message' => 'An email list has been deleted!']); 
         }
-        //delete list emails
-        Email::where('list_id', $list->id)->delete();
-        $list->delete();
-        return response(['status' => 'success', 'message' => 'An email list has been deleted!']); 
+        return response(['status' => 'fail', 'message' => 'Password incorrect!'], Response::HTTP_FORBIDDEN);    
     }
 
     private function is_author($list){

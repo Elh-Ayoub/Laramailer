@@ -17,8 +17,8 @@ class EmailListServices{
         return http.patch(`/email-lists/${id}`, data, {withCredentials: true})
     }
 
-    destroy(id){
-        return http.delete(`/email-lists/${id}`, {withCredentials: true})
+    destroy(id, data){
+        return http.delete(`/email-lists/${id}`, {withCredentials: true, data: data})
     }
 
     emails(id){

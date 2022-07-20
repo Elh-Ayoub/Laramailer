@@ -43,7 +43,7 @@ function Mailers(){
                             <p>Make sure you have created an <Link to="/email-lists">email list</Link> and <Link to="/templates">template</Link></p>
                             <CreateMailer show={showCreate} onHide={() => {setShowCreate(false)}} user={user.data}/>
 
-                            <div className="table-responsive-sm mt-2">
+                            <div className="mt-2">
                                 <MyMailers/>
                             </div>                            
                         </div>

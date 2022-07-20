@@ -106,11 +106,19 @@ function CreateMailer(props){
                         </div>
                         <div className="row mb-3 align-items-center">
                             <div className="col-sm-3">
-                                <h6 className="mb-0">Frequency</h6>
+                                <h6 className="mb-0">Frequency 
+                                    <span class="far fa-question-circle mx-2 frequency-tooltip">
+                                        <span class="frequency-tooltip-text">
+                                            With "Once" frequency, mailer sends email immediately if you select run after 
+                                            creation with ability to re-run it at desired time, else it will be created waiting for you to run it.
+                                        </span>
+                                    </span>
+                                </h6> 
                             </div>
                             <div className="col-sm-9 text-secondary">
                                 <select className="form-select" onChange={(e) => {setFrequency(e.target.value)}}>
                                     <option selected disabled>Select one</option>
+                                    <option value="once">Once</option>
                                     <option value="daily">Daily</option>
                                     <option value="twice_daily">Twice daily</option>
                                     <option value="weekly">Weekly</option>

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import MailerInfo from "../../Components/Dashboard/Mailers/MailerInfo";
-import MyMailers from "../../Components/Dashboard/Mailers/MyMailers";
 import Navbar from "../../Components/Dashboard/Navbar";
 import Sidebar from "../../Components/Dashboard/Sidebar";
 import "../../css/dashboard.css"

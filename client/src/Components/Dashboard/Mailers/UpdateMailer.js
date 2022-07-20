@@ -161,17 +161,20 @@ function UpdateMailer(props){
                                 </select>
                             </div>
                         </div>
-                        <div className="row mb-3 align-items-center">
-                            <div className="col-sm-3">
-                                <h6 className="mb-0">Status</h6>
+                        {(props.mailer.frequency === "once") ? (null) : 
+                        (
+                            <div className="row mb-3 align-items-center">
+                                <div className="col-sm-3">
+                                    <h6 className="mb-0">Status</h6>
+                                </div>
+                                <div className="col-sm-9 text-secondary">
+                                    <select className="form-select" value={status} onChange={(e) => {setStatus(e.target.value)}}>
+                                        <option value="running">Running</option>
+                                        <option value="stopped">Stopped</option>
+                                    </select>
+                                </div>
                             </div>
-                            <div className="col-sm-9 text-secondary">
-                                <select className="form-select" value={status} onChange={(e) => {setStatus(e.target.value)}}>
-                                    <option value="running">Running</option>
-                                    <option value="stopped">Stopped</option>
-                                </select>
-                            </div>
-                        </div>
+                        )}                
                     </form>
                 </Modal.Body>
                 <Modal.Footer className="d-flex justify-content-between">

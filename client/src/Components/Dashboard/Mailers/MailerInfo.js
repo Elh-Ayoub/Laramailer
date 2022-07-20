@@ -53,18 +53,30 @@ function MailerInfo(props){
                     </div>
                 </div>
                 <div className="mt-4 col-md-10">
-                    <div className="row">
-                        <div className="col-sm-3">
-                            <h6 className="mb-0">Status:  </h6>
+                    {(res.data.message.frequency === "once") ? (
+                        <div className="row">
+                            <div className="col-sm-3">
+                                <h6 className="mb-0">Last time sent:  </h6>
+                            </div>
+                            <div className="col-sm-9 text-muted">
+                                {(res.data.message.sent_at) ? (res.data.message.sent_at) : ("Not sent yet!")}
+                            </div>
                         </div>
-                        <div className="col-sm-9">
-                            {(res.data.message.status === "running") ? (
-                                <span className="text-success text-capitalize">{res.data.message.status}</span>
-                            ): (
-                                <span className="text-danger text-capitalize">{res.data.message.status}</span> 
-                            )}
+                    ) : (
+                        <div className="row">
+                            <div className="col-sm-3">
+                                <h6 className="mb-0">Status:  </h6>
+                            </div>
+                            <div className="col-sm-9">
+                                {(res.data.message.status === "running") ? (
+                                    <span className="text-success text-capitalize">{res.data.message.status}</span>
+                                ): (
+                                    <span className="text-danger text-capitalize">{res.data.message.status}</span> 
+                                )}
+                            </div>
                         </div>
-                    </div>
+                    )}
+                    
                     <hr/>
                     <div className="row">
                         <div className="col-sm-3">

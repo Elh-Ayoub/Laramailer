@@ -21,6 +21,10 @@ class MailerServices{
         return http.patch(`/email-senders/${id}`, data, {withCredentials: true})
     }
 
+    run(id){
+        return http.post(`/email-senders/${id}/send`, null, {withCredentials: true})
+    }
+
     destroy(id){
         return http.delete(`/email-senders/${id}`, {withCredentials: true})
     }

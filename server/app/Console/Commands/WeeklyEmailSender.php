@@ -2,7 +2,16 @@
 
 namespace App\Console\Commands;
 
+use App\Mail\TempMail;
+use App\Models\Email;
+use App\Models\EmailSender;
+use App\Models\Template;
+use App\Models\User;
 use Illuminate\Console\Command;
+use Illuminate\Contracts\Encryption\DecryptException;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Mail;
+
 
 class WeeklyEmailSender extends Command
 {
@@ -37,13 +46,17 @@ class WeeklyEmailSender extends Command
                 $view = str_replace("/", '.', $view);
                 $view = str_replace(".blade.php", '', $view);
                 //create mail
-                $data = [
-                    'email' => $email->email,
-                    'subject' => $weeklySender->subject,
-                    'reply_email' => $weeklySender->reply_email,
-                    'user_email' => $user->email,
-                    'user_full_name' => $user->full_name
-                ];
+                try {
+                    $data = [
+                        'email' => Crypt::decryptString($email->email),
+                        'subject' => $weeklySender->subject,
+                        'reply_email' => $weeklySender->reply_email,
+                        'user_email' => $user->email,
+                        'user_full_name' => $user->full_name
+                    ];             
+                } catch (DecryptException $e) {
+                    return 0;
+                }
                 Mail::send(new TempMail($view, $data));
             }            
         }

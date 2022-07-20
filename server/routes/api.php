@@ -59,6 +59,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get("/email-senders", [EmailSenderController::class, 'index']);
     Route::get("/email-senders/{id}", [EmailSenderController::class, 'show']);
     Route::post("/email-senders", [EmailSenderController::class, 'store']);
+    Route::post("/email-senders/{id}/send", [EmailSenderController::class, 'runSender']);
     Route::get("/email-senders/create/info", [EmailSenderController::class, 'getInfo']);
     Route::patch("/email-senders/{id}", [EmailSenderController::class, 'update']);
     Route::delete("/email-senders/{id}", [EmailSenderController::class, 'destroy']);

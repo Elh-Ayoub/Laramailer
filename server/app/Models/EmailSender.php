@@ -18,6 +18,6 @@ class EmailSender extends Model
         'frequency',
         'status',
         'reply_email',
-        'send_at',
+        'sent_at',
     ];
 }

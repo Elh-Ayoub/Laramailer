@@ -20,10 +20,10 @@ return new class extends Migration
             $table->bigInteger('author_id');
             $table->bigInteger('template_id');
             $table->string('subject');
-            $table->enum('frequency', ['daily', 'twice_daily', 'weekly', 'monthly', 'twice_monthly', 'yearly'])->default('daily');
+            $table->enum('frequency', ['once', 'daily', 'twice_daily', 'weekly', 'monthly', 'twice_monthly', 'yearly'])->default('daily');
             $table->enum('status', ['running', 'stopped'])->default('running');
             $table->string('reply_email');
-            $table->dateTime('send_at')->nullable();
+            $table->timestamp('sent_at')->nullable();
             $table->timestamps();
         });
     }

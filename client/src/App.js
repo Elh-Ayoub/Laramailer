@@ -19,6 +19,7 @@ import Templates from "./views/Dashboard/Templates";
 import TemplateById from "./views/Dashboard/TemplateById";
 import Mailers from "./views/Dashboard/Mailers";
 import MailerDetails from "./views/Dashboard/MailerDetails";
+import About from "./views/About";
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
           {/* Auth Module */}
           <Route path="/auth/register" element={<Register />} />
           <Route path="/auth/login" element={<Login />} />

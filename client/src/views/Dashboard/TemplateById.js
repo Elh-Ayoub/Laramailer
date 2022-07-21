@@ -17,10 +17,14 @@ function TemplateById(){
     const [showSide, setShowSide] = useState(true)
     const [showDelete, setShowDelete] = useState(false)
     const [selectedId, setSelectedId] = useState(false)
-    const [html, setHtml] = useState(null)
+    const [html, setHtml] = useState("")
     const [name, setName] = useState(null)
     const [assetsView, setAssetsView] = useState([])
     const [assets, setAssets] = useState({})
+    const [headers, setHeaders] = useState([])
+    const [links, setLinks] = useState([])
+    const [textMatches, setTextMatches] = useState([])
+    const [linkMatches, setLinkMatches] = useState([])
     const { id } = useParams()
 
     useEffect(() => {
@@ -44,10 +48,12 @@ function TemplateById(){
         }
         form.append("view", html)
         form.append("name", name)
+        form.append("textChanges", JSON.stringify(textMatches))
+        form.append("linkChanges", JSON.stringify(linkMatches))
         TemplateServices.update(id, form)
         .then(response => {
             setUpdateRes({loading: false, data: response.data, error: null})
-            setHtml(response.data.html)
+            // setHtml(response.data.html)
         })
         .catch(error => {
             setRes({loading: false, data: null, error: error.response.data})
@@ -99,18 +105,101 @@ function TemplateById(){
     const HandelOnChange = (e) => {
         setHtml(e.target.value)
         CheckAssets()
+        CheckText()
     }
 
     const HandelShowDelete = (id) => {
         setSelectedId(id)
         setShowDelete(true)
     }
-    
+
+    const CheckText = () => {
+        //links
+        var re_a = new RegExp('<a[^>]+href=\"(.*?)\"[^>]*>(.*?)<\/a>', "g");
+        var matches_a = html.matchAll(re_a);
+        var res_a = []
+        var temp = []
+        for (var result of matches_a) {
+            delete result.input
+            delete result.groups
+            result.push(result.index)
+            result.push(result[0])
+            result.push(result[2])
+            delete result.index
+            res_a.push(result)
+            temp.push(result[1])
+            temp.push(result[2])
+        }
+        //text
+        var re = new RegExp('(?<=\>)(?!<)(.*)(?=\<)(?<!\>)', "g");
+        var matches = html.matchAll(re);
+        var res_t = []
+        
+        for (var result of matches) {
+            if(!temp.includes(result[1])){
+                delete result.input
+                delete result.groups
+                result.push(result.index)
+                delete result.index
+                res_t.push(result)
+            }
+        }
+        
+        setLinkMatches(res_a)
+        setTextMatches(res_t)
+        var view = res_t.map((a, i) => 
+            <div className="d-flex justify-content-around my-1" key={i + 1}>
+                <input type="text" className="form-control" data-index={a.index} data-previous={a[1]} defaultValue={a[1]} onChange={(e) => {HandelTextChange(e, a, i, res_t)}}/>
+            </div>
+        )
+        var view_a = res_a.map((a, i) =>
+            <div className="d-flex justify-content-around my-1" key={i + 1}>
+                <div>
+                    <label className="label">Link text</label>
+                    <input type="text" className="form-control" defaultValue={a[2]} onChange={(e) => {HandelLinkText(e, a, i, res_a)}}/> 
+                </div>
+                <div>
+                    <label className="label">Link URL</label>
+                    <input type="text" className="form-control" defaultValue={a[1]} onChange={(e) => {HandelLinkURL(e, a, i, res_a)}}/> 
+                </div>
+            </div>
+        )
+        setHeaders(view)
+        setLinks(view_a)
+    }
+
+    const HandelTextChange = (e, match, i, matches) => {
+        var previousVal = match[0]
+        var currentVal = e.target.value
+        matches[i][1] = currentVal
+        setTextMatches(matches)
+    }
+
+    const HandelLinkURL = (e, match, i, matches) => {
+        var currentVal = e.target.value
+        var prevLink = `href="${matches[i][1]}"`
+        var currLink = `href="${currentVal}"`
+        matches[i][0] = matches[i][0].replace(prevLink, currLink)
+        matches[i][1] = currentVal
+        setLinkMatches(matches)
+        
+    }
+
+    const HandelLinkText = (e, match, i, matches) => {
+        var currentVal = e.target.value
+        matches[i][2] = currentVal
+        setLinkMatches(matches)
+    }
+
+    const HandelOnload = () => {
+        CheckAssets()
+        CheckText()
+    }
     let content = null
     if(res.data){
-        if(res.data.status === 'success'){
+        if(res.data.status === 'success' && html){
             content =
-            <div id="wrapper" className={(showSide) ? ("wrapper-content") : ("wrapper-content toggled")} onLoad={() => {CheckAssets()}}>
+            <div id="wrapper" className={(showSide) ? ("wrapper-content") : ("wrapper-content toggled")} onLoad={() => {HandelOnload()}}>
                 <Sidebar active="Templates"/>
                 <Navbar showSide={showSide} setShowSide={setShowSide}/>
                 <div id="page-content-wrapper">    
@@ -130,14 +219,20 @@ function TemplateById(){
                                                 <div dangerouslySetInnerHTML={{ __html: html }} id="preview"/>
                                             </Tab>
                                             <Tab eventKey="assets" title="Assets / images">
-                                                <h5>{assetsView.length} assets founded in view</h5>
+                                                <h5>{assetsView.length} assets found in view</h5>
                                                 <div className="mt-3">
                                                     {assetsView}
                                                 </div>
                                             </Tab>
+                                            <Tab eventKey="text" title="Text / links">
+                                                <h4>Text</h4>
+                                                {headers}
+                                                <h4>Links</h4>
+                                                {links}
+                                            </Tab>
                                             <Tab eventKey="code" title="Code">
                                                 <input type="text" className="form-control mb-3" value={name} id="temp_name" onChange={(e) => {setName(e.target.value)}}/>
-                                                <textarea className="form-control" rows={20} defaultValue={html} onChange={HandelOnChange}></textarea>
+                                                <textarea className="form-control" id="html" rows={20} value={html} onChange={HandelOnChange}></textarea>
                                             </Tab>
                                         </Tabs>                                       
                                     </div>

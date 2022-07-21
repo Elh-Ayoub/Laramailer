@@ -3,14 +3,14 @@ import { Link } from "react-router-dom";
 import heroBg from "../../images/hero-bg.png"
 import sliderImg from "../../images/slider-img.png"
 
-function Slider(){
+function Slider(props){
     return (
         <div className="hero_area">
-            <div className="hero_bg_box">
+            {/* <div className="hero_bg_box">
                 <div className="bg_img_box">
                     <img src={heroBg} alt=""/>
                 </div>
-            </div>
+            </div> */}
             <section className="slider_section">
                 <div id="customCarousel1" className="carousel slide" data-ride="carousel">
                     <div className="carousel-inner">
@@ -27,7 +27,11 @@ function Slider(){
                                             This is the right place to build your email list and send scheduled email with cool templates
                                             </p>
                                             <div className="btn-box">
+                                            {(props.user.data) ? (
+                                                <Link to="/dashboard" className="btn1">Get started</Link>
+                                            ) : (
                                                 <Link to="/auth/register" className="btn1">Get started</Link>
+                                            )}
                                             </div>
                                         </div>
                                     </div>

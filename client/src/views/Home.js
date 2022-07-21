@@ -19,7 +19,7 @@ function Home(){
     }, [])
     return<div className="sub_page">
         <Header user={user}/>
-        <Slider/>
+        <Slider user={user}/>
         <Services/>
         <Footer/>
     </div> 

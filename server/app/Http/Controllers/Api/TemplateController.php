@@ -128,6 +128,27 @@ class TemplateController extends Controller
                 $blade = str_replace($match, "{{\$message->embed(public_path(\"storage/{$template->path}{$i}.png\"))}}", $blade);
                 $i++;
             }
+            //text changes
+            if($request->textChanges){
+                foreach(json_decode($request->textChanges) as $change){
+                    if($change[0] !== $change[1]){
+                        $html = str_replace($change[0], $change[1], $html);
+                    }
+                }
+            }
+            //link chnages
+            if($request->linkChanges){
+                
+                foreach(json_decode($request->linkChanges) as $change){
+                    if($change[0] !== $change[4]){
+                        // return $change;
+                        $html = str_replace($change[4], $change[0], $html);
+                    }
+                    if($change[2] !== $change[5]){
+                        $html = str_replace($change[5], $change[2], $html);
+                    }
+                }
+            }
             $html_storage = Storage::disk('public')->put($template->path . $template->html, $html);
             $blade_storage = Storage::disk('public')->put($template->path . $template->blade, $blade); 
         }

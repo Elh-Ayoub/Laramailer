@@ -9,6 +9,8 @@ import Loader from "./Loader";
 
 function Header(props){
   const [res, setRes] = useState({loading: false, data: null, error: null})
+  const [collapse, setCollapse] = useState(false)
+
   const logout = () => {
     setRes({loading: true, data: null, error: null})
     AuthServices.logout()
@@ -50,27 +52,28 @@ function Header(props){
                 </span>
               </a>
     
-              <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <button className={(collapse) ? ("navbar-toggler collapsed") : ("navbar-toggler")} type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
+              aria-expanded="false" aria-label="Toggle navigation" onClick={() => (setCollapse(!collapse))}>
                 <span className=""> </span>
               </button>
     
-              <div className="collapse navbar-collapse" id="navbarSupportedContent">
+              <div className={(collapse) ? ("collapse navbar-collapse show") : ("collapse navbar-collapse")} id="navbarSupportedContent">
                 <ul className="navbar-nav  align-items-center">
                   <li className="nav-item ">
                     <Link to="/" className="nav-link">Home</Link>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" href="about.html"> About</a>
+                    <Link to="/about" className="nav-link">About</Link>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" href="service.html">Services</a>
+                    <a className="nav-link" href="why.html">Documentation</a>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" href="why.html">Why Us</a>
+                    <a className="nav-link" href="why.html">Contact us</a>
                   </li>
                   <li className="nav-item">
                     {(props.user.data) ? (
-                      <Link to="/dashboard" className="nav-link"><i className="fa fa-user mr-1" aria-hidden="true"></i> {props.user.data.username}</Link>
+                      <Link to="/dashboard" className="nav-link"><i className="fa fa-dashboard"></i> Dashboard</Link>
                     ) : (
                       <Link to="/auth/login" className="nav-link"><i className="fa fa-user" aria-hidden="true"></i> Login</Link>
                     )}

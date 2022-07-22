@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import logo from "../../images/logo.png"
+import logo from "../../images/logo-w.png"
 
 
 function Sidebar(props){
@@ -21,6 +21,9 @@ function Sidebar(props){
                 </li>
                 <li className={(props.active === "Templates") ? ("active") : ("")}>
                     <Link to="/templates"><i className="fas fa-th-large"></i> Templates</Link>
+                </li>
+                <li className={(props.active === "Freebies") ? ("active") : ("")}>
+                    <Link to="/freebies"><i className="fas fa-layer-group"></i> Freebies</Link>
                 </li>
                 <li className={(props.active === "My account") ? ("active") : ("")}>
                     <Link to="/profile"><i className="fas fa-address-card"></i> My account</Link>

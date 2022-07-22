@@ -20,6 +20,7 @@ import TemplateById from "./views/Dashboard/TemplateById";
 import Mailers from "./views/Dashboard/Mailers";
 import MailerDetails from "./views/Dashboard/MailerDetails";
 import About from "./views/About";
+import Freebies from "./views/Dashboard/Freebies";
 
 
 function App() {
@@ -48,6 +49,8 @@ function App() {
           {/* Mailers */}
           <Route path="/mailers" element={<Mailers />} />
           <Route path="/mailers/:id" element={<MailerDetails />} />
+          {/* Freebies */}
+          <Route path="/freebies" element={<Freebies />} />
         </Routes>
       </BrowserRouter>
   );

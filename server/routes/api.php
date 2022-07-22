@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\EmailController;
 use App\Http\Controllers\Api\EmailListController;
 use App\Http\Controllers\Api\EmailSenderController;
+use App\Http\Controllers\Api\FreebieController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\TemplateController;
 use App\Http\Controllers\Api\UserController;
@@ -71,6 +72,10 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get("/templates/{id}", [TemplateController::class, 'show']);
     Route::post("/templates/{id}", [TemplateController::class, 'update']);
     Route::delete("/templates/{id}", [TemplateController::class, 'destroy']);
+
+    /////////////////////// ----Freebies module---- ///////////////////////
+    Route::get("/freebies", [FreebieController::class, 'index']);
+    Route::post("/freebies", [FreebieController::class, 'store']);
 });
 
 

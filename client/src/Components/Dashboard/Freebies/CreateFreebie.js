@@ -32,10 +32,15 @@ function CreateFreebie(props){
         // let data = {name: name, description: description, file: file, list_id: listId, tag: tag}
         var form = new FormData();
         form.append("name", name)
-        form.append("description", description)
+        if(description){
+           form.append("description", description) 
+        }
+        if(tag){
+            form.append("tag", tag)
+        }
         form.append("file", file)
         form.append("list_id", listId)
-        form.append("tag", tag)
+        
         FreebieServices.store(form)
         .then(response => {
             setRes({loading: false, data: response.data, error: null})

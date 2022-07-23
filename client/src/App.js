@@ -21,6 +21,7 @@ import Mailers from "./views/Dashboard/Mailers";
 import MailerDetails from "./views/Dashboard/MailerDetails";
 import About from "./views/About";
 import Freebies from "./views/Dashboard/Freebies";
+import FreebieById from "./views/Dashboard/FreebieById";
 
 
 function App() {
@@ -51,6 +52,7 @@ function App() {
           <Route path="/mailers/:id" element={<MailerDetails />} />
           {/* Freebies */}
           <Route path="/freebies" element={<Freebies />} />
+          <Route path="/freebies/:id" element={<FreebieById />} />
         </Routes>
       </BrowserRouter>
   );

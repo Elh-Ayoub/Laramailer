@@ -45,11 +45,10 @@ function MyFreebies(){
                 content = res.data.message.map(freebie => 
                     <tr>
                         <td>{freebie.name}</td>
-                        <td>{(freebie.description === null) ? (freebie.description) : ("No description")}</td>
                         <td><Link to={`/freebies/${freebie.id}/download`}>{window.location.href + `/${freebie.id}/download`}</Link></td>
                         <td><Link to={`/email-lists/${freebie.list_id}`}>{freebie.list_name}</Link></td>
-                        <td>{(freebie.tag === null) ? (freebie.tag) : ("No tag specified")}</td>
-                        <td><button className="btn btn-outline-primary">Details</button></td>
+                        <td>{(freebie.tag) ? (freebie.tag) : ("No tag specified")}</td>
+                        <td><Link to={`/freebies/${freebie.id}`} className="btn btn-outline-primary">Details</Link></td>
                     </tr>
                 )
                 table = 
@@ -57,7 +56,6 @@ function MyFreebies(){
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Description</th>
                             <th>URL</th>
                             <th>Email list</th>
                             <th>Tag</th>

@@ -75,7 +75,10 @@ Route::middleware('auth:sanctum')->group(function(){
 
     /////////////////////// ----Freebies module---- ///////////////////////
     Route::get("/freebies", [FreebieController::class, 'index']);
+    Route::get("/freebies/{id}", [FreebieController::class, 'show']);
     Route::post("/freebies", [FreebieController::class, 'store']);
+    Route::post("/freebies/{id}", [FreebieController::class, 'update']);
+    Route::delete("/freebies/{id}", [FreebieController::class, 'destroy']);
 });
 
 

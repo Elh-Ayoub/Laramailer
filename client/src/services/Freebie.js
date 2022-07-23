@@ -9,6 +9,18 @@ class FreebieServices{
     store(data){
         return http.post('/freebies', data, {withCredentials: true})
     }
+
+    show(id){
+        return http.get(`/freebies/${id}`, {withCredentials: true})
+    }
+
+    update(id, data){
+        return http.post(`/freebies/${id}`, data, {withCredentials: true})
+    }
+
+    destroy(id, data){
+        return http.delete(`/freebies/${id}`, {withCredentials: true, data: data})
+    }
 }
 
 export default new FreebieServices()

@@ -45,7 +45,7 @@ function MyFreebies(){
                 content = res.data.message.map(freebie => 
                     <tr>
                         <td>{freebie.name}</td>
-                        <td><Link to={`/freebies/${freebie.id}/download`}>{window.location.href + `/${freebie.id}/download`}</Link></td>
+                        <td><Link to={`/freebies/${freebie.id}/download`} target="_blank">{window.location.href + `/${freebie.id}/download`}</Link></td>
                         <td><Link to={`/email-lists/${freebie.list_id}`}>{freebie.list_name}</Link></td>
                         <td>{(freebie.tag) ? (freebie.tag) : ("No tag specified")}</td>
                         <td><Link to={`/freebies/${freebie.id}`} className="btn btn-outline-primary">Details</Link></td>

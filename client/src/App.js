@@ -22,6 +22,7 @@ import MailerDetails from "./views/Dashboard/MailerDetails";
 import About from "./views/About";
 import Freebies from "./views/Dashboard/Freebies";
 import FreebieById from "./views/Dashboard/FreebieById";
+import DownloadFeebie from "./views/Dashboard/DownloadFreebie";
 
 
 function App() {
@@ -53,6 +54,8 @@ function App() {
           {/* Freebies */}
           <Route path="/freebies" element={<Freebies />} />
           <Route path="/freebies/:id" element={<FreebieById />} />
+          {/* Download freebie*/}
+          <Route path="/freebies/:id/download" element={<DownloadFeebie />} />
         </Routes>
       </BrowserRouter>
   );

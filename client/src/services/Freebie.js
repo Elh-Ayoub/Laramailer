@@ -18,6 +18,10 @@ class FreebieServices{
         return http.post(`/freebies/${id}`, data, {withCredentials: true})
     }
 
+    download(id, data){
+        return http.post(`/freebies/${id}/download`, data, {withCredentials: true})
+    }
+
     destroy(id, data){
         return http.delete(`/freebies/${id}`, {withCredentials: true, data: data})
     }

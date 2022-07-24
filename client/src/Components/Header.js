@@ -69,7 +69,7 @@ function Header(props){
                     <a className="nav-link" href="why.html">Documentation</a>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" href="why.html">Contact us</a>
+                    <Link to="/contact-us" className="nav-link">Contact us</Link>
                   </li>
                   <li className="nav-item">
                     {(props.user.data) ? (

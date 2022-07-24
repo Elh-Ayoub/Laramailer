@@ -81,3 +81,4 @@ Route::middleware('auth:sanctum')->group(function(){
 });
 Route::get("/freebies/{id}", [FreebieController::class, 'show']);
 Route::post("/freebies/{id}/download", [FreebieController::class, 'download']);
+Route::post("/contact", [UserController::class, 'contact']);

@@ -23,6 +23,7 @@ import About from "./views/About";
 import Freebies from "./views/Dashboard/Freebies";
 import FreebieById from "./views/Dashboard/FreebieById";
 import DownloadFeebie from "./views/Dashboard/DownloadFreebie";
+import ContactUs from "./views/ContactUs";
 
 
 function App() {
@@ -56,6 +57,8 @@ function App() {
           <Route path="/freebies/:id" element={<FreebieById />} />
           {/* Download freebie*/}
           <Route path="/freebies/:id/download" element={<DownloadFeebie />} />
+          {/* Contact Us */}
+          <Route path="/contact-us" element={<ContactUs />} />
         </Routes>
       </BrowserRouter>
   );

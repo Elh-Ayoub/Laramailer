@@ -22,6 +22,10 @@ class UserServices{
     destroy(id, data){
         return Http.delete(`/users/${id}`, {withCredentials: true, data: data})
     }
+
+    contact(data){
+        return Http.post('/contact', data)
+    }
 }
 
 export default new UserServices()

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Mail\ContactMail;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -144,5 +146,27 @@ class UserController extends Controller
             return response(['status' => 'success', 'message' => 'User deleted successfully!']);
         }
         return response(['status' => 'fail', 'message' => 'Password incorrect!'], Response::HTTP_FORBIDDEN);
+    }
+
+    public function contact(Request $request){
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'full_name' => 'required|string',
+            'subject' => 'required|string',
+            'message' => 'required|string',
+        ]);
+        if($validator->fails()){
+            return response(['status' => 'fail-arr', 'message' => $validator->errors()->toArray()], 400);
+        }
+        //send mail to admin
+        $data = [
+            'title' => 'Message from ' . $request->full_name,
+            'email' => $request->email,
+            'full_name' => $request->full_name,
+            'subject' => $request->subject,
+            'message' => $request->message
+        ];
+        Mail::send(new ContactMail($data));
+        return response(['status' => 'success', 'message' => 'Message sent successfully!']);
     }
 }

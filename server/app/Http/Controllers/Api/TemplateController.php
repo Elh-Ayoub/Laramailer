@@ -8,6 +8,7 @@ use App\Models\Template;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -113,9 +114,9 @@ class TemplateController extends Controller
         if(!$this->is_author($template)){
             return response(['status' => 'fail', 'message' => 'Operation forbidden'], Response::HTTP_FORBIDDEN);
         }
-
+        // return $request->assets_c;
         if($request->file('assets')){
-            $this->uploadAssets($request->file('assets'), $template->path);
+            $this->uploadAssets($request->file('assets'), $template->path, $request->assets_c);
         }
         //html, blade
         if($request->view){
@@ -158,7 +159,13 @@ class TemplateController extends Controller
         return response(['status' => 'success', 'message' => 'Template updated successfully!']);
     }
 
-    public function destroy($id){
+    public function destroy(Request $request, $id){
+        $validator = Validator::make($request->all(), [
+            'password' => 'required|string',
+        ]);
+        if($validator->fails()){
+            return response(['status' => 'fail-arr', 'message' => $validator->errors()->toArray()], 400);
+        }
         $user = Auth::user();
         if(!$user){
             return response(['status' => 'fail', 'message' => 'Operation forbidden'], Response::HTTP_UNAUTHORIZED);
@@ -170,24 +177,26 @@ class TemplateController extends Controller
         if(!$this->is_author($template)){
             return response(['status' => 'fail', 'message' => 'Operation forbidden'], Response::HTTP_FORBIDDEN);
         }
-        //pause mailers with this template
-        $mailers = EmailSender::where('template_id', $template->id)->get();
-        foreach($mailers as $mailer){
-            $mailer->update(['status' => 'stopped']);
+        if(Hash::check($request->password, Auth::user()->password)){
+            //pause mailers with this template
+            $mailers = EmailSender::where('template_id', $template->id)->get();
+            foreach($mailers as $mailer){
+                $mailer->update(['status' => 'stopped']);
+            }
+            Storage::disk('public')->deleteDirectory($template->path);
+            $template->delete();
+            return response(['status' => 'success', 'message' => 'Template deleted successfully!']);
         }
-        Storage::disk('public')->deleteDirectory($template->path);
-        $template->delete();
-        return response(['status' => 'success', 'message' => 'Template deleted successfully!']);
+        return response(['status' => 'fail', 'message' => 'Password incorrect!'], Response::HTTP_FORBIDDEN);
     }
 
-    private function uploadAssets($assets, $path){
+    private function uploadAssets($assets, $path, $positions){
         $dir = public_path('storage/' . $path);
         if($assets){
-            $i = 1;
-            foreach($assets as $item){
-                $item2 = $item->store('public');
-                $item->move($dir, $i . '.png');
-                $i++;
+            for($i = 0; $i < count($assets); $i++){
+                $assets[$i]->store('public');
+                $p = $positions[$i];
+                $assets[$i]->move($dir, $p . '.png');
             }
         }
     }

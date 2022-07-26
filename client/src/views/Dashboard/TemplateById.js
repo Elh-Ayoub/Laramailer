@@ -20,7 +20,7 @@ function TemplateById(){
     const [html, setHtml] = useState("")
     const [name, setName] = useState(null)
     const [assetsView, setAssetsView] = useState([])
-    const [assets, setAssets] = useState({})
+    const [assets, setAssets] = useState([])
     const [headers, setHeaders] = useState([])
     const [links, setLinks] = useState([])
     const [textMatches, setTextMatches] = useState([])
@@ -43,9 +43,12 @@ function TemplateById(){
     const update = () => {
         setUpdateRes({loading: true, data: null, error: null})
         var form = new FormData();
-        for (const [key, value] of Object.entries(assets)) {
-            form.append("assets[]", value)
-        }
+        assets.map((item, i) => {
+            if(item){
+                form.append("assets[]", item)
+                form.append("assets_c[]", i + 1)
+            }
+        })
         form.append("view", html)
         form.append("name", name)
         form.append("textChanges", JSON.stringify(textMatches))
@@ -53,7 +56,6 @@ function TemplateById(){
         TemplateServices.update(id, form)
         .then(response => {
             setUpdateRes({loading: false, data: response.data, error: null})
-            // setHtml(response.data.html)
         })
         .catch(error => {
             setRes({loading: false, data: null, error: error.response.data})
@@ -61,8 +63,8 @@ function TemplateById(){
     }
 
     let loader = null
-    if(res.loading){
-        loader = loader = <div className="loader_mid"><Loader/></div>
+    if(res.loading || updateRes.loading){
+        loader = <div className="loader_mid"><Loader/></div>
     }
 
     if(updateRes.data){
@@ -93,10 +95,11 @@ function TemplateById(){
     const CheckAssets = () => {
         //Check asssets
         var matches = (html.match(/<img/g) || []);
+        setAssets(Array.apply(null, Array(matches.length)))
         var assets_view = matches.map((a, i) => 
-            <div className="d-flex justify-content-around my-1" key={i + 1}>
-                <label className="label">Choose asset number {i + 1} </label>
-                <input type="file" className="input_assets" onChange={AssetsChangeHandler} name="assets[]" id={i + 1}/>
+            <div className="d-flex align-items-center justify-content-center my-2" key={i + 1}>
+                <label className="w-50">Choose asset number {i + 1} </label>
+                <input type="file" className="form-control w-50" onChange={AssetsChangeHandler} name="assets[]" id={i}/>
             </div>
         )
         setAssetsView(assets_view)

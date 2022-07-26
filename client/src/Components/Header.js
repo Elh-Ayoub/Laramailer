@@ -66,7 +66,7 @@ function Header(props){
                     <Link to="/about" className="nav-link">About</Link>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" href="why.html">Documentation</a>
+                    <Link to="/documentation" className="nav-link">Documentation</Link>
                   </li>
                   <li className="nav-item">
                     <Link to="/contact-us" className="nav-link">Contact us</Link>

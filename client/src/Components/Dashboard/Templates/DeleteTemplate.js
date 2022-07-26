@@ -8,12 +8,14 @@ import { useNavigate } from "react-router-dom";
 
 function DeleteTemplate(props){
     const [res, setRes] = useState({loading: false, data: null, error: null})
+    const [password, setPassword] = useState(null)
     const navigate = useNavigate()
 
     const destroy = (e) => {
         e.preventDefault()
         setRes({loading: true, data: null, error: null})
-        TemplateServices.destroy(props.id)
+        let data = {password: password}
+        TemplateServices.destroy(props.id, data)
         .then(response => {
             setRes({loading: false, data: response.data, error: null})
         })
@@ -55,7 +57,15 @@ function DeleteTemplate(props){
             <Modal.Body className="bg-danger text-light">
                 <ToastContainer/>
                 {loader}
-                Woohoo, you're about to delete this template<br/>Are you sure ?
+                <p>Woohoo, you're about to delete this template<br/>Are you sure ?</p>
+                <div className="row mb-3 align-items-center">
+                    <div className="col-sm-3">
+                        <h6 className="mb-0">Password</h6>
+                    </div>
+                    <div className="col-sm-9 text-secondary">
+                        <input type="password" className="form-control" onChange={(e) => {setPassword(e.target.value)}} required/>
+                    </div>
+                </div>
             </Modal.Body>
             <Modal.Footer className="bg-danger">
                 <button className="btn btn-outline-light" onClick={props.onHide}>

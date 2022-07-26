@@ -52,7 +52,9 @@ function MyEmailLists(){
                 content = res.data.message.map(list => 
                     <tr key={list.id} itemScope="row">
                         <td><Link to={`/email-lists/${list.id}`}>{list.name}</Link></td>
-                        <td>{(list.description) ? (list.description) : ("No description")}</td>
+                        <td className="col-5" id="description_row">{(list.description) ? (
+                            (list.description.length >= 41) ? (list.description.substring(0, 41) + "...") : (list.description)
+                        ) : ("No description")}</td>
                         <td>{new Date(list.created_at).toUTCString()}</td>
                         <td>
                             <Link to={`/email-lists/${list.id}`} className="btn btn-outline-warning btn-sm mx-2"><i className="fas fa-pen"></i></Link>

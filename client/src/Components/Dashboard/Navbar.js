@@ -51,7 +51,7 @@ function Navbar(props){
                             <Link to="/" className="nav-link dashboard-nav-link">Home</Link>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link dashboard-nav-link" href="#">Documentation</a>
+                        <Link to="/documentation" className="nav-link dashboard-nav-link" href="#">Documentation</Link>
                         </li>
                         <li className="nav-item">
                             <button className="nav-link dashboard-nav-link logout-dash-btn" onClick={logout}>logout</button>

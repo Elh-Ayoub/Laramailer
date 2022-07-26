@@ -21,8 +21,8 @@ class TemplateServices{
         return http.post("/templates", data, {withCredentials: true})
     }
 
-    destroy(id){
-        return http.delete(`/templates/${id}`, {withCredentials: true})
+    destroy(id, data){
+        return http.delete(`/templates/${id}`, {withCredentials: true, data: data})
     }
 }
 

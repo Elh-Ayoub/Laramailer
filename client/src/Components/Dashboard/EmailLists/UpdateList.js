@@ -25,7 +25,7 @@ function UpdateList(props){
 
     let loader = null
     if(res.loading){
-        loader = loader = <div className="loader_mid"><Loader/></div>
+        loader = <div className="loader_mid"><Loader/></div>
     }
     if(res.data){
         if(res.data.status === 'success'){
@@ -80,7 +80,7 @@ function UpdateList(props){
             </Modal.Body>
             <Modal.Footer className="d-flex justify-content-between">
                 <button className="btn btn-outline-secondary" onClick={props.onHide}>Close</button>
-                <button className="btn btn-outline-primary" onClick={update}>Save</button>
+                <button className="btn btn-outline-primary" onClick={update} disabled={res.loading}>Save</button>
             </Modal.Footer>
         </Modal>
     )

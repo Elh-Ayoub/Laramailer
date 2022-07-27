@@ -120,7 +120,7 @@ function DownloadFeebie(){
                                                         </div>
                                                     </div>
                                                     <div className="col-12 d-flex justify-content-end">
-                                                        <button type="submit" id="submit" className="btn btn-outline-primary">
+                                                        <button type="submit" id="submit" className="btn btn-outline-primary" disabled={downloadRes.loading}>
                                                             Download
                                                         </button>
                                                     </div>

@@ -24,7 +24,7 @@ function RunSender(props){
 
     let loader = null
     if(res.loading){
-        loader = loader = <div className="loader_mid"><Loader/></div>
+        loader = <div className="loader_mid"><Loader/></div>
     }
     if(res.data){
         if(res.data.status === 'success'){
@@ -60,7 +60,7 @@ function RunSender(props){
                 <button className="btn btn-outline-primary" onClick={props.onHide}>
                     Close
                 </button>
-                <button className="btn btn-primary" onClick={send}>
+                <button className="btn btn-primary" onClick={send} disabled={res.loading}>
                     Confirm
                 </button>
             </Modal.Footer>

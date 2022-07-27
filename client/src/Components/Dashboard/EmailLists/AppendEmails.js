@@ -41,7 +41,7 @@ function AppendEmail(props){
 
     let loader = null
     if(res.loading){
-        loader = loader = <div className="loader_mid"><Loader/></div>
+        loader = <div className="loader_mid"><Loader/></div>
     }
     if(res.data){
         if(res.data.status === 'success'){
@@ -104,7 +104,7 @@ function AppendEmail(props){
             </Modal.Body>
             <Modal.Footer className="d-flex justify-content-between">
                 <button className="btn btn-outline-secondary" onClick={props.onHide}>Close</button>
-                <button className="btn btn-outline-primary" onClick={append}>Add</button>
+                <button className="btn btn-outline-primary" onClick={append} disabled={res.loading}>Add</button>
             </Modal.Footer>
         </Modal>
     )

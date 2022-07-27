@@ -88,7 +88,7 @@ function CreateTemplate(props){
             </Modal.Body>
             <Modal.Footer className="d-flex justify-content-end">
                 <button className="btn btn-outline-secondary" onClick={props.onHide}>Close</button>
-                <button className="btn btn-outline-primary" onClick={create}>Create</button>
+                <button className="btn btn-outline-primary" onClick={create} disabled={res.loading}>Create</button>
             </Modal.Footer>
         </Modal>
     )

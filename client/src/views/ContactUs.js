@@ -117,7 +117,7 @@ function ContactUs(){
                                                     </div>
                                                     <div className="col-md-12">
                                                         <div className="form-group d-flex justify-content-end">
-                                                            <button type="submit" className="btn btn-outline-primary">Send Message</button>
+                                                            <button type="submit" className="btn btn-outline-primary" disabled={res.loading}>Send Message</button>
                                                         </div>
                                                     </div>
                                                 </div>

@@ -240,7 +240,7 @@ function TemplateById(){
                                         </Tabs>                                       
                                     </div>
                                     <div className="card-footer d-flex justify-content-end py-3">
-                                        <button className="btn btn-outline-primary" onClick={update}>Save changes</button>
+                                        <button className="btn btn-outline-primary" onClick={update} disabled={updateRes.loading}>Save changes</button>
                                     </div>
                                 </div>
                             </div>

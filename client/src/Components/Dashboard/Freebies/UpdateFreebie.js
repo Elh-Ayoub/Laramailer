@@ -144,7 +144,7 @@ function UpdateFreebie(props){
                     </Modal.Body>
                     <Modal.Footer className="d-flex justify-content-between">
                         <button type="button" className="btn btn-outline-secondary" onClick={props.onHide}>Close</button>
-                        <button type="submit" className="btn btn-outline-primary">Save changes</button>
+                        <button type="submit" className="btn btn-outline-primary" disabled={res.loading}>Save changes</button>
                     </Modal.Footer>
                 </form>
             </Modal>

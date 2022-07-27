@@ -40,7 +40,7 @@ function UserInfo(props){
 
     let loader = null
     if(res.loading){
-        loader = loader = <div className="loader_mid"><Loader/></div>
+        loader = <div className="loader_mid"><Loader/></div>
     }
     if(res.data){
         if(res.data.status === 'success'){
@@ -94,7 +94,7 @@ function UserInfo(props){
                     </div>
                     <div className="row justify-content-between mx-auto">
                         <button className="btn btn-outline-danger col-md-4 col-sm-5" onClick={() => {setShowConfirm(true)}}>Delete account</button>
-                        <button className="btn btn-primary col-md-4 col-sm-5 add-mt" onClick={update}>Save Changes</button>            
+                        <button className="btn btn-primary col-md-4 col-sm-5 add-mt" onClick={update} disabled={res.loading}>Save Changes</button>            
                     </div>
                 </div>
             </div>
@@ -118,7 +118,7 @@ function UserInfo(props){
                         <button type="button" className="btn btn-outline-light" onClick={() => {setShowConfirm(false)}}>
                             Close
                         </button>
-                        <button type="submit" className="btn btn-outline-light">
+                        <button type="submit" className="btn btn-outline-light" disabled={res.loading}>
                             Confirm
                         </button>
                     </Modal.Footer>

@@ -24,7 +24,7 @@ function UpdatePassword(props){
 
     let loader = null
     if(res.loading){
-        loader = loader = <div className="loader_mid"><Loader/></div>
+        loader = <div className="loader_mid"><Loader/></div>
     }
     if(res.data){
         if(res.data.status === 'success'){
@@ -76,7 +76,7 @@ function UpdatePassword(props){
                     </div>
                 </div>
                 <div class="row justify-content-end mx-auto">
-                    <button className="btn btn-primary col-md-4" onClick={updatePass}>Update password</button>               
+                    <button className="btn btn-primary col-md-4" onClick={updatePass} disabled={res.loading}>Update password</button>               
                 </div>
             </div>
         </div>

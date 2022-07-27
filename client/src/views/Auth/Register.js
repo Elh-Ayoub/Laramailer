@@ -55,7 +55,7 @@ function Register(){
     }
 
     if(res.loading){
-        loader = loader = <div className="loader_mid"><Loader/></div>
+        loader = <div className="loader_mid"><Loader/></div>
     }
     if(res.data){
         setEverythingToNull()

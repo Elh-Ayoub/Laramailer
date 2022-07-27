@@ -50,13 +50,24 @@ class EmailController extends Controller
         if($validator->failed()){
             return response(['status' => 'fail-arr', 'message' => $validator->errors()->toArray()], 400);
         }
+        //check if email exist
         foreach($request->email as $e){
-            $email = Email::create([
-                'email' => Crypt::encryptString($e),
-                'list_id' => $list->id,
-                'author_id' => Auth::id(),
-                'tag' => $request->tag
-            ]);
+            $list_emails = Email::where('list_id', $list->id)->get();
+            $exists = false;
+            foreach($list_emails as $email){
+                if($e === Crypt::decryptString($email->email)){
+                    $exists = true;
+                    break;
+                }
+            }
+            if(!$exists){
+                $email = Email::create([
+                    'email' => Crypt::encryptString($e),
+                    'list_id' => $list->id,
+                    'author_id' => Auth::id(),
+                    'tag' => $request->tag
+                ]); 
+            }
         }
         return response(['status' => 'success', 'message' => 'Email(s) added to ' . $list->name . ' successfully!']);
     }

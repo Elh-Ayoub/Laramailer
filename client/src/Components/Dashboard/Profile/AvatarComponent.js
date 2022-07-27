@@ -39,7 +39,7 @@ function Avatar (props){
 
     let loader = null
     if(res.loading){
-        loader = loader = <div className="loader_mid"><Loader/></div>
+        loader = <div className="loader_mid"><Loader/></div>
     }
     if(res.data){
         if(res.data.status === 'success'){
@@ -76,11 +76,11 @@ function Avatar (props){
                     </div>
                     <hr className="my-4"/>
                     <div className="row d-flex justify-content-between col-12 mt-3 mx-auto">
-                        <label htmlFor="select_avatar" className="btn btn-primary col-6">Select image</label>
+                        <label htmlFor="select_avatar" className={(res.loading) ? ("btn btn-primary col-6 disabled") : ("btn btn-primary col-6")}>Select image</label>
                         <input type="file" id="select_avatar" onChange={changeHandler} hidden/>
-                        <button className="btn btn-outline-primary col-4" onClick={setAvatar}>Save</button>
+                        <button className="btn btn-outline-primary col-4" onClick={setAvatar} disabled={res.loading}>Save</button>
                     </div>
-                    <button className="btn btn-outline-danger mt-2 col-12 mx-auto" onClick={deleteAvatar}>Delete Profile picture</button>
+                    <button className="btn btn-outline-danger mt-2 col-12 mx-auto" onClick={deleteAvatar} disabled={res.loading}>Delete Profile picture</button>
                 </div>
             </div>
         </div>

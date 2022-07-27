@@ -55,7 +55,7 @@ class FreebieController extends Controller
     public function store(Request $request){
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
-            'file' => 'required|mimes:zip,rar',
+            'file' => 'required|file|mimes:zip,rar|max:2109',
             'list_id' => 'required|integer'
         ]);
 
@@ -91,7 +91,7 @@ class FreebieController extends Controller
     public function update(Request $request, $id){
         $validator = Validator::make($request->all(), [
             'name' => 'string',
-            'file' => 'mimes:zip,rar',
+            'file' => 'mimes:zip,rar|max:2109',
             'list_id' => 'integer',
         ]);
         if($validator->fails()){

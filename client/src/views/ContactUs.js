@@ -6,6 +6,7 @@ import UserServices from "../services/User";
 import "../css/contact.css"
 import Loader from "../Components/Loader";
 import { toast, ToastContainer } from "react-toastify";
+import { t } from "../Translate/Translate";
 
 
 function ContactUs(){
@@ -87,13 +88,13 @@ function ContactUs(){
                                 <div className="row">
                                     <div className="col-lg-8 col-md-12 order-md-last row align-items-stretch contact-wrap mx-0">
                                         <div className="col-12 p-md-5 p-4">
-                                            <h3 className="mb-4">Get in touch</h3>
+                                            <h3 className="mb-4">{t('contact_title1')}</h3>
                                             <form id="contactForm" className="contactForm" onSubmit={send}>
                                                 <div className="row">
                                                     <div className="col-md-6 col-sm-12">
                                                         <div className="">
-                                                            <label className="label" htmlFor="name">Full Name</label>
-                                                            <input type="text" className="form-control input-control" id="name" placeholder="Name" onChange={(e) => {setFullName(e.target.value)}} required/>
+                                                            <label className="label" htmlFor="name">{t('full_name')}</label>
+                                                            <input type="text" className="form-control input-control" id="name" placeholder={t('name')} onChange={(e) => {setFullName(e.target.value)}} required/>
                                                         </div>
                                                     </div>
                                                     <div className="col-md-6 col-sm-12">
@@ -104,8 +105,8 @@ function ContactUs(){
                                                     </div>
                                                     <div className="col-md-12">
                                                         <div className="my-3">
-                                                            <label className="label" htmlFor="subject">Subject</label>
-                                                            <input type="text" className="form-control input-control" id="subject" placeholder="Subject"  onChange={(e) => {setSubject(e.target.value)}} required/>
+                                                            <label className="label" htmlFor="subject">{t('subject')}</label>
+                                                            <input type="text" className="form-control input-control" id="subject" placeholder={t('subject')}  onChange={(e) => {setSubject(e.target.value)}} required/>
                                                         </div>
                                                     </div>
                                                     <div className="col-md-12">
@@ -117,7 +118,7 @@ function ContactUs(){
                                                     </div>
                                                     <div className="col-md-12">
                                                         <div className="form-group d-flex justify-content-end">
-                                                            <button type="submit" className="btn btn-outline-primary" disabled={res.loading}>Send Message</button>
+                                                            <button type="submit" className="btn btn-outline-primary" disabled={res.loading}>{t('send_m')}</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -126,8 +127,8 @@ function ContactUs(){
                                     </div>
                                     <div className="col-lg-4 col-md-12 row align-items-stretch mx-0 p-0">
                                         <div className="info-wrap col-12 p-md-5 p-4">
-                                            <h3>Let's get in touch</h3>
-                                            <p className="mb-4">We're open for any suggestion or just to have a chat</p>
+                                            <h3>{t('contact_title2')}</h3>
+                                            <p className="mb-4">{t('contact_title3')}</p>
                                             
                                             <div className="dbox w-100 d-flex align-items-center">
                                                 <div className="icon d-flex align-items-center justify-content-center mx-2">

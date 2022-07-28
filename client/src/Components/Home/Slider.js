@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import heroBg from "../../images/hero-bg.png"
 import sliderImg from "../../images/slider-img.png"
+import { t } from "../../Translate/Translate";
 
 function Slider(props){
     return (
@@ -20,17 +21,17 @@ function Slider(props){
                                     <div className="col-md-6 ">
                                         <div className="detail-box">
                                             <h1>
-                                            Send <br/>
-                                            Better Emails
+                                            {t('send')} <br/>
+                                            {t('b_emails')}
                                             </h1>
                                             <p>
-                                            This is the right place to build your email list and send scheduled email with cool templates
+                                            {t('right_place')}
                                             </p>
                                             <div className="btn-box">
                                             {(props.user.data) ? (
-                                                <Link to="/dashboard" className="btn1">Get started</Link>
+                                                <Link to="/dashboard" className="btn1">{t('get_started')}</Link>
                                             ) : (
-                                                <Link to="/auth/register" className="btn1">Get started</Link>
+                                                <Link to="/auth/register" className="btn1">{t('get_started')}</Link>
                                             )}
                                             </div>
                                         </div>

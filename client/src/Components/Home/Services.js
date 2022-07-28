@@ -2,7 +2,7 @@ import React from "react";
 import S1 from "../../images/s1.png"
 import S2 from "../../images/s2.png"
 import S3 from "../../images/s3.png"
-
+import { t } from "../../Translate/Translate"
 
 function Services(){
     return(
@@ -11,11 +11,11 @@ function Services(){
             <div className="container ">
                 <div className="heading_container heading_center">
                 <h2>
-                    Our <span>Services</span>
+                    {t('services_title')[0]} <span>{t('services_title')[1]}</span>
                 </h2>
-                <p>There are many services that we can help with</p>
+                <p>{t('many_services')}</p>
                 </div>
-                <div className="row">
+                <div className="row flex-grow-1 align-items-stretch">
                     <div className="col-md-4 ">
                         <div className="box ">
                         <div className="img-box">
@@ -23,9 +23,9 @@ function Services(){
                         </div>
                         <div className="detail-box">
                             <h5>
-                            Email lists
+                                {t('lists_s')}
                             </h5>
-                            <p>You can build multy list for multi email senders </p>
+                            <p>{t('lists_services')} </p>
                         </div>
                         </div>
                     </div>
@@ -36,10 +36,10 @@ function Services(){
                         </div>
                         <div className="detail-box">
                             <h5>
-                            Schedule emails
+                                {t('schedule_s')}
                             </h5>
                             <p>
-                                We take care of scheduling your email list with desired frequency forever
+                                {t('schedule_services')}
                             </p>
                         </div>
                         </div>
@@ -51,10 +51,10 @@ function Services(){
                         </div>
                         <div className="detail-box">
                             <h5>
-                            Creative templates
+                                {t('templates_s')}
                             </h5>
                             <p>
-                            Choose a default template, customize it, or build your own with HTML/CSS
+                                {t('templates_services')}
                             </p>
                         </div>
                         </div>

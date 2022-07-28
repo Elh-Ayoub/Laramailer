@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom"
 import AuthServices from "../../services/Auth"
 import { toast, ToastContainer } from "react-toastify";
 import Loader from "../../Components/Loader"
+import { t } from "../../Translate/Translate";
+
 
 function Register(){
     const [user, setUser] = useState({loading: true, data: null, error: null})
@@ -89,32 +91,32 @@ function Register(){
                                     <div className="col-lg-6">
                                         <div className="p-4">
                                             <div className="mb-5">
-                                                <h3 className="h4 font-weight-bold text-theme">Registration</h3>
+                                                <h3 className="h4 font-weight-bold text-theme">{t('registration')}</h3>
                                             </div>
                                             <form onSubmit={registration}>
                                                 <div className="form-group">
-                                                    <label htmlFor="username">Username</label>
-                                                    <input type="text" className="form-control my-1" id="username" onChange={(e) => {setUsername(e.target.value)}} value={username}/>
+                                                    <label htmlFor="username">{t('username')}</label>
+                                                    <input type="text" className="form-control my-1 py-2 px-3" id="username" onChange={(e) => {setUsername(e.target.value)}} value={username}/>
                                                 </div>
                                                 <div className="form-group">
-                                                    <label htmlFor="full_name">Full name</label>
-                                                    <input type="text" className="form-control my-1" id="full_name" onChange={(e) => {setFullName(e.target.value)}} value={fullName}/>
+                                                    <label htmlFor="full_name">{t('full_name')}</label>
+                                                    <input type="text" className="form-control my-1 py-2 px-3" id="full_name" onChange={(e) => {setFullName(e.target.value)}} value={fullName}/>
                                                 </div>
                                                 <div className="form-group">
                                                     <label htmlFor="email">Email address</label>
-                                                    <input type="email" className="form-control my-1" id="email" onChange={(e) => {setEmail(e.target.value)}}/>
+                                                    <input type="email" className="form-control my-1 py-2 px-3" id="email" onChange={(e) => {setEmail(e.target.value)}}/>
                                                 </div>
                                                 <div className="form-group">
-                                                    <label htmlFor="password">Password</label>
-                                                    <input type="password" className="form-control my-1" id="password" onChange={(e) => {setPassword(e.target.value)}} />
+                                                    <label htmlFor="password">{t('password')}</label>
+                                                    <input type="password" className="form-control my-1 py-2 px-3" id="password" onChange={(e) => {setPassword(e.target.value)}} />
                                                 </div>
                                                 <div className="form-group mb-4">
-                                                    <label htmlFor="pass_confirm">Password confirmation</label>
-                                                    <input type="password" className="form-control my-1" id="pass_confirm" onChange={(e) => {setPassConfirm(e.target.value)}} />
+                                                    <label htmlFor="pass_confirm">{t('password_confirmation')}</label>
+                                                    <input type="password" className="form-control my-1 py-2 px-3" id="pass_confirm" onChange={(e) => {setPassConfirm(e.target.value)}} />
                                                 </div>
-                                                <button type="submit" className="btn btn-outline-primary col-12 mb-4" disabled={res.loading}>Sign up</button>
+                                                <button type="submit" className="btn btn-outline-primary col-12 mb-4" disabled={res.loading}>{t('sign_up')}</button>
                                                 <fieldset className="form-input my-1">
-                                                    <Link to="/auth/login">Already have an account ? Sign in</Link>
+                                                    <Link to="/auth/login">{t('already_have_account')}</Link>
                                                 </fieldset>
                                             </form>
                                         </div>
@@ -124,7 +126,7 @@ function Register(){
                                             <div className="overlay rounded-right"></div>
                                             <div className="account-testimonial">
                                                 <h4 className="text-white mb-4 text-left"><Link to="/" className="link-light">Laramailer</Link></h4>
-                                                <p className="lead text-white text-left">You are one step away before being a part of this service. Grow faster, better, easier</p>
+                                                <p className="lead text-white text-left">{t('register_text')}</p>
                                             </div>
                                         </div>
                                     </div>

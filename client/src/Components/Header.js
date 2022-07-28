@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import AuthServices from "../services/Auth";
 import { toast, ToastContainer } from "react-toastify";
 import Loader from "./Loader";
+import {t, getLang, setLang } from "../Translate/Translate";
 
 
 function Header(props){
@@ -31,6 +32,11 @@ function Header(props){
         toast.success(res.data.message, {position: "top-right", autoClose: 5000, hideProgressBar: true, theme: "colored"});
     }
     setRes({loading: false, data: null, error: null})
+    window.location.reload()
+  }
+
+  const HandelLangChange = (e) => {
+    setLang(e.target.value)
     window.location.reload()
   }
 
@@ -63,26 +69,32 @@ function Header(props){
                     <Link to="/" className="nav-link">Home</Link>
                   </li>
                   <li className="nav-item">
-                    <Link to="/about" className="nav-link">About</Link>
+                    <Link to="/about" className="nav-link">{t('about')}</Link>
                   </li>
                   <li className="nav-item">
                     <Link to="/documentation" className="nav-link">Documentation</Link>
                   </li>
                   <li className="nav-item">
-                    <Link to="/contact-us" className="nav-link">Contact us</Link>
+                    <Link to="/contact-us" className="nav-link">{t('contact')}</Link>
                   </li>
                   <li className="nav-item">
                     {(props.user.data) ? (
-                      <Link to="/dashboard" className="nav-link"><i className="fa fa-dashboard"></i> Dashboard</Link>
+                      <Link to="/dashboard" className="nav-link"><i className="fa fa-dashboard"></i> {t('dashboard')}</Link>
                     ) : (
-                      <Link to="/auth/login" className="nav-link"><i className="fa fa-user" aria-hidden="true"></i> Login</Link>
+                      <Link to="/auth/login" className="nav-link"><i className="fa fa-user" aria-hidden="true"></i> {t('login')}</Link>
                     )}
                   </li>
                   {(props.user.data) ? (
-                    <li className="nav-item">
-                      <button className="btn btn-outline-light" onClick={logout}><i className="fa fa-sign-out mr-1" aria-hidden="true"></i> Logout</button>
+                    <li className="nav-item mx-2">
+                      <button className="btn btn-outline-light" onClick={logout}><i className="fa fa-sign-out mr-1" aria-hidden="true"></i> {t('logout')}</button>
                     </li>
                   ) : (null)}
+                  <li className="nav-item">
+                    <select className="form-select-sm lang" defaultValue={getLang()} onChange={HandelLangChange}>
+                      <option value="en">English</option>
+                      <option value="fr">Français</option>
+                    </select>
+                  </li>
                 </ul>
               </div>
             </nav>

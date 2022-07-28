@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { t } from "../Translate/Translate";
 
 
 function Footer(){
@@ -43,28 +44,27 @@ function Footer(){
                 </div>
                 <div className="col-md-6 col-lg-3 info_col">
                     <div className="info_detail">
-                        <h4>About</h4>
+                        <h4>{t('about')}</h4>
                         <p>
-                            Laramiler is a service that can help you store and build an email list, 
-                            and create cool templates that fits your needs, send it or schedule a loop mailers
+                            {t('small_about')}
                         </p>
                         <Link to="/about" className="">
-                            Read more &raquo;
+                        {t('read')} &raquo;
                         </Link>
                     </div>
                 </div>
                 <div className="col-md-6 col-lg-2 mx-auto info_col">
                     <div className="info_link_box">
-                        <h4>Links</h4>
+                        <h4>{t('links')}</h4>
                         <div className="info_links">
                         <Link to="/" className="">
                             Home
                         </Link>
                         <Link to="/about" className="">
-                            About
+                            {t('about')}
                         </Link>
                         <Link to="/contact-us" className="">
-                            Contact us
+                            {t('contact')}
                         </Link>
                         <Link to="/documentation" className="">
                             Documentation

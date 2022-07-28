@@ -926,4 +926,20 @@ a:focus {
 .footer_section p a {
   color: inherit;
 }
+
+.lang{
+  background: none;
+  color: #fff;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+.lang option{
+  color: black;
+  padding: 5px 10px;
+  border-radius: 0;
+}
+.lang:focus{
+  border: none;
+}
 /*# sourceMappingURL=style.css.map */

@@ -4,6 +4,7 @@ import Header from "../Components/Header"
 import AuthServices from "../services/Auth"
 import Img from "../images/slider-img.png"
 import { Link } from "react-router-dom"
+import { t } from "../Translate/Translate"
 
 
 function About(){
@@ -25,7 +26,7 @@ function About(){
                 <div class="container">
                 <div class="heading_container heading_center">
                     <h2>
-                    About <span>Us</span>
+                    {t('about_title')[0]} <span>{t('about_title')[1]}</span>
                     </h2>
                 </div>
                 <div class="row">
@@ -37,17 +38,14 @@ function About(){
                     <div class="col-md-6">
                     <div class="detail-box">
                         <h3>
-                        We Are Laramiler
+                        {t('about_t')}
                         </h3>
                         <p>
-                            Laramiler is a service that can help you store and build an email list, and create cool templates that fits your needs
-                            and easly send generated templates to your clients, immedialtly or create a scheduler that sends daily or twice daily
-                            or monthly or twice monthly or even yearly.
+                            {t('about_text1')}
                         </p>
                         <p>
-                            If you are stuck in somewhere or have some questions you can check <Link to="/documentation">Documentation</Link> page 
-                            that can help you and answer most comman question that comes in your way. Or you can send message
-                            in <Link to="/contact-us">Contact us</Link> page.
+                            {t('about_text2')} <Link to="/documentation">Documentation</Link> page 
+                            {t('about_text3')} <Link to="/contact-us">Contact us</Link> page.
                         </p>
                     </div>
                     </div>

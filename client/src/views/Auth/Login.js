@@ -5,6 +5,8 @@ import { Link, useNavigate } from "react-router-dom"
 import Loader from "../../Components/Loader"
 import { toast, ToastContainer } from "react-toastify";
 import AuthServices from "../../services/Auth";
+import { t } from "../../Translate/Translate";
+
 
 function Login(props){
     const [user, setUser] = useState({loading: true, data: null, error: null})
@@ -83,26 +85,26 @@ function Login(props){
                                     <div className="col-lg-6">
                                         <div className="p-4">
                                             <div className="mb-5">
-                                                <h3 className="h4 font-weight-bold text-theme">Log in</h3>
+                                                <h3 className="h4 font-weight-bold text-theme">{t('login')}</h3>
                                             </div>
                                             <form onSubmit={submitLogin}>
                                                 <div className="form-group">
-                                                    <label htmlFor="identifier">Email or username</label>
-                                                    <input type="text" className="form-control my-1" id="identifier" onChange={(e) => {setIdentifier(e.target.value)}} />
+                                                    <label htmlFor="identifier">{t('email_username')}</label>
+                                                    <input type="text" className="form-control my-1 py-1 px-3" id="identifier" onChange={(e) => {setIdentifier(e.target.value)}} />
                                                 </div>
                                                 <div className="form-group mb-4">
-                                                    <label htmlFor="password">Password</label>
-                                                    <input type="password" className="form-control my-1" id="password" onChange={(e) => {setPasssword(e.target.value)}} />
+                                                    <label htmlFor="password">{t('password')}</label>
+                                                    <input type="password" className="form-control my-1 py-1 px-3" id="password" onChange={(e) => {setPasssword(e.target.value)}} />
                                                 </div>
-                                                <button type="submit" className="btn btn-outline-primary col-12 mb-4" disabled={res.loading}>Sign in</button>
+                                                <button type="submit" className="btn btn-outline-primary col-12 mb-4" disabled={res.loading}>{t('sign_in')}</button>
                                                 <fieldset className="form-input my-1">
-                                                    <Link to="/auth/register">Don't have account ? Sign up</Link>
+                                                    <Link to="/auth/register">{t('dont_have_account')}</Link>
                                                 </fieldset>
                                                 <fieldset className="form-input my-1">
-                                                    <Link to="/auth/forgot-password">Reset password</Link>
+                                                    <Link to="/auth/forgot-password">{t('reset_pass')}</Link>
                                                 </fieldset> 
                                                 <fieldset className="form-input my-1">
-                                                    <Link to="/auth/resend-verification">Resend verfication email</Link>
+                                                    <Link to="/auth/resend-verification">{t('resend_verification')}</Link>
                                                 </fieldset> 
                                             </form>
                                         </div>
@@ -112,7 +114,7 @@ function Login(props){
                                             <div className="overlay rounded-right"></div>
                                             <div className="account-testimonial">
                                                 <h4 className="text-white mb-4 text-left"><Link to="/" className="link-light">Laramailer</Link></h4>
-                                                <p className="lead text-white text-left">Welcome back mate! Log in to your account, enjoy!</p>
+                                                <p className="lead text-white text-left">{t('login_text')}</p>
                                             </div>
                                         </div>
                                     </div>

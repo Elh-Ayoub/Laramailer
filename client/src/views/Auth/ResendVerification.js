@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom"
 import Loader from "../../Components/Loader";
 import { toast, ToastContainer } from "react-toastify";
 import AuthServices from "../../services/Auth";
+import { t } from "../../Translate/Translate";
 
 
 function ResendVerification(){
@@ -70,11 +71,11 @@ function ResendVerification(){
                                             <form onSubmit={resend}>
                                                 <div className="form-group mb-4">
                                                     <label htmlFor="email">Email</label>
-                                                    <input type="email" className="form-control my-1" id="email" onChange={(e) => {setEmail(e.target.value)}} />
+                                                    <input type="email" className="form-control my-1 py-2 px-3" id="email" onChange={(e) => {setEmail(e.target.value)}} />
                                                 </div>
-                                                <button type="submit" className="btn btn-outline-primary col-12 mb-4" disabled={res.loading}>Resend verification link</button>
+                                                <button type="submit" className="btn btn-outline-primary col-12 mb-4" disabled={res.loading}>{t("resend_verification")}</button>
                                                 <fieldset className="form-input my-1">
-                                                    <Link to="/auth/login">Go back to login</Link>
+                                                    <Link to="/auth/login">{t('go_login')}</Link>
                                                 </fieldset> 
                                             </form>
                                         </div>
@@ -84,7 +85,7 @@ function ResendVerification(){
                                             <div className="overlay rounded-right"></div>
                                             <div className="account-testimonial">
                                                 <h4 className="text-white mb-4 text-left"><Link to="/" className="link-light">Laramailer</Link></h4>
-                                                <p className="lead text-white text-left">Verfication link expired? No problem we can resend new one. Verify your email address and enjoy</p>
+                                                <p className="lead text-white text-left">{t("email_verification_text")}</p>
                                             </div>
                                         </div>
                                     </div>

@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import emailListImg from "../images/emailList.png"
 import mailerImg from "../images/mailers.png"
 import freebieImg from "../images/freebies.png"
+import { t } from "../Translate/Translate";
 
 
 function Documentation(){
@@ -41,11 +42,9 @@ function Documentation(){
                             <div className="timeline-box one-of-two">
                                 <img className="mb-1-6 rounded img-fluid border" src={emailListImg} alt="..."/>
                                 <div className="content">
-                                    <h3 className="h4 mb-2 mb-md-3 text-left">Email list</h3>
+                                    <h3 className="h4 mb-2 mb-md-3 text-left">{t('email_list')}</h3>
                                     <p className="mb-0 text-left">
-                                        First thing you need is an email list, creating email list is not a big deal you just need to log in,
-                                        access you dashboard, email lists section and click "Create list" button, you need to name it and with a small
-                                        description will be better. Before deleting an email list make sure not attached with a mailer because it will be paused.
+                                        {t('doc_email_list')}
                                     </p>
                                 </div>
                                 <div className="year">1</div>
@@ -53,17 +52,13 @@ function Documentation(){
                             <div className="timeline-box one-of-two">
                                 <img className="mb-1-6 rounded img-fluid border" src="https://via.placeholder.com/280x280/FF7F50/000000" alt="..."/>
                                 <div className="content">
-                                    <h3 className="h4 mb-2 mb-md-3 text-left">Template</h3>
+                                    <h3 className="h4 mb-2 mb-md-3 text-left">{t('template')}</h3>
                                     <p className="mb-0 text-left">
-                                        Another challenging step it to create a template, in template section you have default template which you can edit
-                                        for you own reasons.
+                                        {t('doc_email_temp1')}
                                         <br/><br/>
-                                        For update a template you have there tabs in update template page. First one is for preview, second you can update images
-                                        in templates. Third tab is for updatingtext and links in template and changes can be seen after saving changes bu clicking 
-                                        "Save changes" in buttom of page.
+                                        {t('doc_email_temp2')}
                                         <br/><br/>
-                                        If you are developer or have basic knowledge about HTML/CSS last tab is for you, you find html code of your template, but you must
-                                        keep in mind that inline css is very recomended for email templates.
+                                        {t('doc_email_temp3')}
                                     </p>
                                 </div>
                                 <div className="year">2</div>
@@ -71,16 +66,15 @@ function Documentation(){
                             <div className="timeline-box one-of-two">
                                 <img className="mb-1-6 rounded img-fluid border" src={mailerImg} alt="..."/>
                                 <div className="content">
-                                    <h3 className="h4 mb-2 mb-md-3 text-left">Mailers</h3>
+                                    <h3 className="h4 mb-2 mb-md-3 text-left">{t('mailer')}</h3>
                                     <p className="mb-0 text-left">
-                                        After having a template and email list, it's time to create a mailer. You have multipe choices, you can create scheduled mailer that
-                                        sends template selected to emails in selected list, you can setup a daily, twice daily, weekly, twice monthly and yearly frequencies.
+                                        {t('doc_mailer1')}
                                         <br/>
-                                        You can also create a mailer that sends once at desired time. and it will be saved in your dashbord to resend it any time you want.
+                                        {t('doc_mailer2')}
                                         <br/><br/>
-                                        Keep in mind that in a template or email list that is attached to mailer has been deleted the mailer will be stopped and cannot be sent.
+                                        {t('doc_mailer3')}
                                         <br/>
-                                        And you can set reply email, it's your account email by default, and from name is you full name in account settings.
+                                        {t('doc_mailer4')}
                                     </p>
                                 </div>
                                 <div className="year">3</div>
@@ -88,15 +82,13 @@ function Documentation(){
                             <div className="timeline-box one-of-two">
                                 <img className="mb-1-6 rounded img-fluid border" src={freebieImg} alt="..."/>
                                 <div className="content">
-                                    <h3 className="h4 mb-2 mb-md-3 text-left">Freebies</h3>
+                                    <h3 className="h4 mb-2 mb-md-3 text-left">{t('freebies')}</h3>
                                     <p className="mb-0 text-left">
-                                        Freebies are greate tool for growing you email list, just share a greate thing (guid, book, demo ...) with other people
-                                        insterested. A accessible link will be provided after freebie creation and to download the freebie a valid email is needed in the email append to email list selected at creation
-                                        automatically. 
+                                        {t('doc_freebie1')} 
                                         <br/><br/>
-                                        if in some how email list selected has been deleted if new email comes a new list will be created automatically and append email.
+                                        {t('doc_freebie2')}
                                         <br/><br/>
-                                        And if you have any other suggestion please send a message to administration in <Link to="/contact-us">Contact us</Link>
+                                        {t('doc_freebie3')}  <Link to="/contact-us">{t('contact')}</Link>
                                     </p>
                                 </div>
                                 <div className="year">4</div>

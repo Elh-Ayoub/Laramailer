@@ -68,5 +68,5 @@ body, html, #root{
 	border-radius: 0;
 	box-shadow: 0 0 24px rgba(91, 94, 222, 0.16);
 	font-size: 13px;
-	padding: 5px 20px;
+	/* padding: 5px 20px; */
 }

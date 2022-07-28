@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import Loader from "../../Components/Loader";
 import AuthServices from "../../services/Auth";
+import { t } from "../../Translate/Translate";
 
 
 function ResetPassword(){
@@ -61,18 +62,18 @@ function ResetPassword(){
                                     <div className="col-lg-6">
                                         <div className="p-4">
                                             <div className="mb-5">
-                                                <h3 className="h4 font-weight-bold text-theme">Reset password</h3>
+                                                <h3 className="h4 font-weight-bold text-theme">{t('reset_pass')}</h3>
                                             </div>
                                             <form onSubmit={reset}>
                                                 <div className="form-group">
-                                                    <label htmlFor="email">New password</label>
+                                                    <label htmlFor="email">{t('new_pass')}</label>
                                                     <input type="password" className="form-control my-1" id="email" onChange={(e) => {setPasssword(e.target.value)}} />
                                                 </div>
                                                 <div className="form-group mb-4">
-                                                    <label htmlFor="email">Confirm new password</label>
+                                                    <label htmlFor="email">{t('confirm_new_pass')}</label>
                                                     <input type="password" className="form-control my-1" id="email" onChange={(e) => {setPassConfirm(e.target.value)}} />
                                                 </div>
-                                                <button type="submit" className="btn btn-outline-primary col-12 mb-4" disabled={res.loading}>Reset passsword</button>
+                                                <button type="submit" className="btn btn-outline-primary col-12 mb-4" disabled={res.loading}>{t('reset_pass')}</button>
                                             </form>
                                         </div>
                                     </div>
@@ -81,7 +82,7 @@ function ResetPassword(){
                                             <div className="overlay rounded-right"></div>
                                             <div className="account-testimonial">
                                                 <h4 className="text-white mb-4 text-left"><Link to="/" className="link-light">Laramailer</Link></h4>
-                                                <p className="lead text-white text-left">Forgot your password? No problem, we can email a reset password link</p>
+                                                <p className="lead text-white text-left">{t('reset_text')}</p>
                                             </div>
                                         </div>
                                     </div>

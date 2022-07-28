@@ -5,6 +5,8 @@ import { Link } from "react-router-dom"
 import { toast, ToastContainer } from "react-toastify";
 import Loader from "../../Components/Loader";
 import AuthServices from "../../services/Auth";
+import { t } from "../../Translate/Translate";
+
 
 function ForgotPassword(){
     const [res, setRes] = useState({loading: false, data: null, error: null})
@@ -64,16 +66,16 @@ function ForgotPassword(){
                                     <div className="col-lg-6">
                                         <div className="p-4">
                                             <div className="mb-5">
-                                                <h3 className="h4 font-weight-bold text-theme">Reset password</h3>
+                                                <h3 className="h4 font-weight-bold text-theme">{t('reset_pass')}</h3>
                                             </div>
                                             <form onSubmit={sendResetLink}>
                                                 <div className="form-group mb-4">
                                                     <label htmlFor="email">Email</label>
-                                                    <input type="email" className="form-control my-1" id="email" onChange={(e) => {setEmail(e.target.value)}} />
+                                                    <input type="email" className="form-control my-1 py-1 px-3" id="email" onChange={(e) => {setEmail(e.target.value)}} />
                                                 </div>
-                                                <button type="submit" className="btn btn-outline-primary col-12 mb-4" disabled={res.loading}>Send reset link</button>
+                                                <button type="submit" className="btn btn-outline-primary col-12 mb-4" disabled={res.loading}>{t('send_reset')}</button>
                                                 <fieldset className="form-input my-1">
-                                                    <Link to="/auth/login">Go back to login</Link>
+                                                    <Link to="/auth/login">{t('go_login')}</Link>
                                                 </fieldset> 
                                             </form>
                                         </div>
@@ -83,7 +85,7 @@ function ForgotPassword(){
                                             <div className="overlay rounded-right"></div>
                                             <div className="account-testimonial">
                                                 <h4 className="text-white mb-4 text-left"><Link to="/" className="link-light">Laramailer</Link></h4>
-                                                <p className="lead text-white text-left">Forgot your password? No problem, we can email a reset password link</p>
+                                                <p className="lead text-white text-left">{t('reset_text')}</p>
                                             </div>
                                         </div>
                                     </div>

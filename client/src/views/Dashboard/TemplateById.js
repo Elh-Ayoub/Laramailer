@@ -212,7 +212,7 @@ function TemplateById(){
                         <div className="row">
                             <div className="col-lg-12">
                                 <div className="d-flex justify-content-between align-items-center">
-                                    <h1>My templates - {res.data.message.name}</h1>
+                                    <h1 className="text-dark">My templates - {res.data.message.name}</h1>
                                     <button className="btn btn-outline-danger" onClick={() => {HandelShowDelete(res.data.message.id)}}><i className="fas fa-trash mx-1"></i>Delete template</button>
                                 </div>
                                 <div className="card">

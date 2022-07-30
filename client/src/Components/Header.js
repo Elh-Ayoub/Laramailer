@@ -79,7 +79,7 @@ function Header(props){
                   </li>
                   <li className="nav-item">
                     {(props.user.data) ? (
-                      <Link to="/dashboard" className="nav-link"><i className="fa fa-dashboard"></i> {t('dashboard')}</Link>
+                      <Link to="/mailers" className="nav-link"><i className="fa fa-dashboard"></i> {t('dashboard')}</Link>
                     ) : (
                       <Link to="/auth/login" className="nav-link"><i className="fa fa-user" aria-hidden="true"></i> {t('login')}</Link>
                     )}

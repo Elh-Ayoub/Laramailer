@@ -110,6 +110,7 @@ function UpdateMailer(props){
                             </div>
                             <div className="col-sm-9 text-secondary">
                                 <select className="form-select" value={frequency} onChange={(e) => {setFrequency(e.target.value)}}>
+                                    <option value="once">Once</option>
                                     <option value="daily">Daily</option>
                                     <option value="twice_daily">Twice daily</option>
                                     <option value="weekly">Weekly</option>

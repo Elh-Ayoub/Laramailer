@@ -31,7 +31,7 @@ function checkAssests(){
     let html = "";
     for (let i = 1; i <= asstes; i++){
         html += 
-        '<div class="row justify-content-around">'+
+        '<div class="row justify-content-around text-dark">'+
             '<label class="label">Choose asset number ' + i +'</label>'+
             ' <input type="file" class="input_assets" name="assets[]" id="' + i +'">'+
         '</div>'

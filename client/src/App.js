@@ -43,7 +43,7 @@ function App() {
           <Route path="/email/verify/success" element={<Success />} />
           <Route path="/auth/reset-password/:token/:email" element={<ResetPassword />} />
           {/* User Module */}
-          <Route path="/dashboard" element={<Dashboard />} />
+          {/* <Route path="/dashboard" element={<Dashboard />} /> */}
           <Route path="/profile" element={<Profile />} />
           {/* Email lists */}
           <Route path="/email-lists" element={<EmailLists />} />

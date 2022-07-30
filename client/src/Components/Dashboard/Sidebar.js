@@ -10,9 +10,9 @@ function Sidebar(props){
                 <li className="sidebar-brand mb-4">
                     <Link to="/"><img src={logo} className="sidebar-brand-img"/></Link>
                 </li>
-                <li className={(props.active === "Dashboard") ? ("active") : ("")}>
+                {/* <li className={(props.active === "Dashboard") ? ("active") : ("")}>
                     <Link to="/dashboard"><i className="fa fa-dashboard"></i> Dashboard</Link>
-                </li>
+                </li> */}
                 <li className={(props.active === "My Mailers") ? ("active") : ("")}>
                     <Link to="/mailers"><i className="fa fa-envelope"></i> My Mailers</Link>
                 </li>

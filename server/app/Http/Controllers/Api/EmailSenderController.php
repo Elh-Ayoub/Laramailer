@@ -10,6 +10,8 @@ use App\Models\EmailSender;
 use App\Models\Template;
 use App\Models\User;
 use Carbon\Carbon;
+use DateInterval;
+use DateTime;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -152,6 +154,13 @@ class EmailSenderController extends Controller
         }
         if(!$this->is_author($template)){
             return response(['status' => 'fail', 'message' => 'Operation forbidden'], Response::HTTP_FORBIDDEN);
+        }
+        //check cooldown
+        $currentDate = new DateTime();
+        $lastSent = new DateTime($sender->sent_at);
+        $lastSent->add(new DateInterval('PT1H'));
+        if($currentDate < $lastSent){
+            return response(['status' => 'fail', 'message' => 'Cooldown of 1 hour from last sending!'], 400);
         }
         if($this->runOnceSender($sender)){
             return response(['status' => 'success', 'message' => 'Emails has been sent to list!']);

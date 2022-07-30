@@ -120,36 +120,40 @@ class TemplateController extends Controller
         }
         //html, blade
         if($request->view){
-            preg_match_all('/src="([^"]+)"/', $request->view, $matches);
-            $i = 1;
             $blade = $request->view;
             $html = $request->view;
-            foreach($matches[1] as $match){
-                $html = str_replace($match, asset('storage/' . $template->path . $i . '.png'), $html);
-                $blade = str_replace($match, "{{\$message->embed(public_path(\"storage/{$template->path}{$i}.png\"))}}", $blade);
-                $i++;
-            }
             //text changes
             if($request->textChanges){
                 foreach(json_decode($request->textChanges) as $change){
                     if($change[0] !== $change[1]){
-                        $html = str_replace($change[0], $change[1], $html);
+                        $html = $this->str_replace_first($change[0], $change[1], $html);
+                        $blade = $this->str_replace_first($change[0], $change[1], $blade);
                     }
                 }
             }
             //link chnages
             if($request->linkChanges){
-                
                 foreach(json_decode($request->linkChanges) as $change){
                     if($change[0] !== $change[4]){
                         // return $change;
-                        $html = str_replace($change[4], $change[0], $html);
+                        $html = $this->str_replace_first($change[4], $change[0], $html);
+                        $blade = $this->str_replace_first($change[4], $change[0], $blade);
                     }
                     if($change[2] !== $change[5]){
-                        $html = str_replace($change[5], $change[2], $html);
+                        $html = $this->str_replace_first($change[5], $change[2], $html);
+                        $blade = $this->str_replace_first($change[5], $change[2], $blade);
                     }
                 }
             }
+            //images in html
+            preg_match_all('/src="([^"]+)"/', $html, $matches);
+            $i = 1;
+            foreach($matches[1] as $match){
+                $html = str_replace($match, asset('storage/' . $template->path . $i . '.png'), $html);
+                $blade = str_replace($match, "{{\$message->embed(public_path(\"storage/{$template->path}{$i}.png\"))}}", $blade);
+                $i++;
+            }
+            //imgae in blade
             $html_storage = Storage::disk('public')->put($template->path . $template->html, $html);
             $blade_storage = Storage::disk('public')->put($template->path . $template->blade, $blade); 
         }
@@ -206,5 +210,11 @@ class TemplateController extends Controller
             return false;
         }
         return true;
+    }
+
+    private function str_replace_first($search, $replace, $subject)
+    {
+        $search = '/'.preg_quote($search, '/').'/';
+        return preg_replace($search, $replace, $subject, 1);
     }
 }

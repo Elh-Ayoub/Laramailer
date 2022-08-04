@@ -21,20 +21,20 @@ function Footer(){
                                 <i className="fas fa-paper-plane" aria-hidden="true"></i>
                                 <span>+380-955072544</span>
                             </a>
-                            <a href="mailto:contact@laramailer.com">
+                            <a href="mailto:support@laramailer.com">
                                 <i className="fa fa-envelope" aria-hidden="true"></i>
-                                <span>contact@laramailer.com</span>
+                                <span>support@laramailer.com</span>
                             </a>
                         </div>
                     </div>
                     <div className="info_social">
-                        <a href="">
+                        <a href="https://www.facebook.com/elhaddadi.a" target="_blank">
                             <i className="fa fa-facebook" aria-hidden="true"></i>
                         </a>
                         <a href="https://www.linkedin.com/in/ayoub-el-haddadi-590b99219/" target="_blank">
                             <i className="fa fa-linkedin" aria-hidden="true"></i>
                         </a>
-                        <a href="">
+                        <a href="https://www.instagram.com/elh_ayoub_/" target="_blank">
                             <i className="fa fa-instagram" aria-hidden="true"></i>
                         </a>
                         <a href="https://github.com/Elh-Ayoub/" target="_blank">

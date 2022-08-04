@@ -9,6 +9,7 @@ import TemplateServices from "../../services/Template";
 import Tab from 'react-bootstrap/Tab'
 import Tabs from 'react-bootstrap/Tabs'
 import DeleteTemplate from "../../Components/Dashboard/Templates/DeleteTemplate";
+import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 
 
 function TemplateById(){
@@ -219,7 +220,8 @@ function TemplateById(){
                                     <div className="card-body">
                                         <Tabs defaultActiveKey="preview" className="mb-3">
                                             <Tab eventKey="preview" title="Preview" className="preview-container">
-                                                <div dangerouslySetInnerHTML={{ __html: html }} id="preview"/>
+                                                {/* <div dangerouslySetInnerHTML={{ __html: html }} id="preview"/> */}
+                                                { ReactHtmlParser(html) }
                                             </Tab>
                                             <Tab eventKey="assets" title="Assets / images">
                                                 <h5>{assetsView.length} assets found in view</h5>

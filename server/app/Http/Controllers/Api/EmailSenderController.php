@@ -156,11 +156,13 @@ class EmailSenderController extends Controller
             return response(['status' => 'fail', 'message' => 'Operation forbidden'], Response::HTTP_FORBIDDEN);
         }
         //check cooldown
-        $currentDate = new DateTime();
-        $lastSent = new DateTime($sender->sent_at);
-        $lastSent->add(new DateInterval('PT1H'));
-        if($currentDate < $lastSent){
-            return response(['status' => 'fail', 'message' => 'Cooldown of 1 hour from last sending!'], 400);
+        if($sender->sent_at){
+            $currentDate = new DateTime();
+            $lastSent = new DateTime($sender->sent_at);
+            $lastSent->add(new DateInterval('PT1H'));
+            if($currentDate < $lastSent){
+                return response(['status' => 'fail', 'message' => 'Cooldown of 1 hour from last sending!'], 400);
+            }
         }
         if($this->runOnceSender($sender)){
             return response(['status' => 'success', 'message' => 'Emails has been sent to list!']);

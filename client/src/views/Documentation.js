@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import emailListImg from "../images/emailList.png"
 import mailerImg from "../images/mailers.png"
 import freebieImg from "../images/freebies.png"
+import templateImg from "../images/templates.png"
 import { t } from "../Translate/Translate";
 
 
@@ -50,7 +51,7 @@ function Documentation(){
                                 <div className="year">1</div>
                             </div>
                             <div className="timeline-box one-of-two">
-                                <img className="mb-1-6 rounded img-fluid border" src="https://via.placeholder.com/280x280/FF7F50/000000" alt="..."/>
+                                <img className="mb-1-6 rounded img-fluid border" src={templateImg} alt="..."/>
                                 <div className="content">
                                     <h3 className="h4 mb-2 mb-md-3 text-left">{t('template')}</h3>
                                     <p className="mb-0 text-left">

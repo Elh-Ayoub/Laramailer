@@ -151,22 +151,22 @@ function ContactUs(){
                                                     <span className="fas fa-envelope"></span>
                                                 </div>
                                                 <div className="text pl-3">
-                                                    <p><a href="mailto:contact@laramailer.com">contact@laramailer.com</a></p>
+                                                    <p><a href="mailto:support@laramailer.com">support@laramailer.com</a></p>
                                                 </div>
                                             </div>
                                             <div className="dbox w-100 d-flex justify-content-between align-items-center">
                                                 <a className="icon d-flex align-items-center justify-content-center mx-2" target="_blank" href="https://www.linkedin.com/in/ayoub-el-haddadi-590b99219/">
                                                     <span className="fa fa-linkedin"></span>
                                                 </a>
-                                                <div className="icon d-flex align-items-center justify-content-center mx-2">
+                                                <a className="icon d-flex align-items-center justify-content-center mx-2" target="_blank" href="https://www.facebook.com/elhaddadi.a">
                                                     <span className="fa fa-facebook"></span>
-                                                </div>
-                                                <div className="icon d-flex align-items-center justify-content-center mx-2">
+                                                </a>
+                                                <a className="icon d-flex align-items-center justify-content-center mx-2" target="_blank" href="https://www.instagram.com/elh_ayoub_/">
                                                     <span className="fa fa-instagram"></span>
-                                                </div>
-                                                <div className="icon d-flex align-items-center justify-content-center mx-2">
+                                                </a>
+                                                <a className="icon d-flex align-items-center justify-content-center mx-2" target="_blank" href="https://github.com/Elh-Ayoub">
                                                     <span className="fa fa-github"></span>
-                                                </div>
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
